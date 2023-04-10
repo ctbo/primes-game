@@ -5,34 +5,58 @@
 %%Pages: 1
 %%EndComments
 
+% Calculate the midpoint of the bounding box of a string
+/stringMidpoint {
+    gsave
+    newpath
+    0 0 moveto
+    false charpath
+    flattenpath
+    pathbbox
+    /ury exch def
+    /urx exch def
+    /lly exch def
+    /llx exch def
+    urx llx sub 2 div
+    ury lly sub 2 div
+    grestore
+} def
+
+% Show the string centered on the current point
+/showCentered {
+    dup stringMidpoint neg exch neg exch rmoveto
+    show
+} def
+
+
 % procedures to render a symbol for each prime at the current location
 /primeProcedures
 <<
-  2 { (2) show } bind
-  3 { (3) show } bind
-  5 { (5) show } bind
-  7 { (7) show } bind
-  11 { (11) show } bind
-  13 { (13) show } bind
-  17 { (17) show } bind
-  19 { (19) show } bind
-  23 { (23) show } bind
-  29 { (29) show } bind
-  31 { (31) show } bind
-  37 { (37) show } bind
-  41 { (41) show } bind
-  43 { (43) show } bind
-  47 { (47) show } bind
-  53 { (53) show } bind
-  59 { (59) show } bind
-  61 { (61) show } bind
-  67 { (67) show } bind
-  71 { (71) show } bind
-  73 { (73) show } bind
-  79 { (79) show } bind
-  83 { (83) show } bind
-  89 { (89) show } bind
-  97 { (97) show } bind
+  2 { numberFont (2) showCentered }
+  3 { /ZapfDingbats findfont 10 scalefont setfont (3) showCentered }
+  5 { (5) showCentered }
+  7 { (7) showCentered }
+  11 { (11) showCentered }
+  13 { (13) showCentered }
+  17 { (17) showCentered }
+  19 { (19) showCentered }
+  23 { (23) showCentered }
+  29 { (29) showCentered }
+  31 { (31) showCentered }
+  37 { (37) showCentered }
+  41 { (41) showCentered }
+  43 { (43) showCentered }
+  47 { (47) showCentered }
+  53 { (53) showCentered }
+  59 { (59) showCentered }
+  61 { (61) showCentered }
+  67 { (67) showCentered }
+  71 { (71) showCentered }
+  73 { (73) showCentered }
+  79 { (79) showCentered }
+  83 { (83) showCentered }
+  89 { (89) showCentered }
+  97 { (97) showCentered }
 >> def
 
 /primeFactors {
@@ -55,29 +79,6 @@
       } ifelse
     } loop
   ]
-} def
-
-% Calculate the midpoint of the bounding box of a string
-/stringMidpoint {
-    gsave
-    newpath
-    0 0 moveto
-    false charpath
-    flattenpath
-    pathbbox
-    /ury exch def
-    /urx exch def
-    /lly exch def
-    /llx exch def
-    urx llx sub 2 div
-    ury lly sub 2 div
-    grestore
-} def
-
-% Show the string centered on the current point
-/showCentered {
-    dup stringMidpoint neg exch neg exch rmoveto
-    show
 } def
 
 
@@ -160,6 +161,12 @@
 
     0.5 xstep mul 0.5 ystep mul rmoveto
 
+    gsave
+    0.5 setlinewidth
+    currentpoint newpath sRadius 0 360 arc
+    stroke
+    grestore
+
     primeFactors /pfs exch def
     pfs length /l exch def
     l 0 ne
@@ -171,8 +178,9 @@
             dup
             dup alpha mul cos sRadius mul exch alpha mul sin sRadius mul exch rmoveto
             pfs exch get
-            2 string cvs numberFont showCentered
+            primeProcedures exch get exec
             grestore
         } for
     } if
 } for
+
