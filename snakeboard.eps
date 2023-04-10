@@ -30,7 +30,7 @@
 
 /paintSymbol
 {
-    exch 25 div 1 1 sethsbcolor
+    4 1 roll setrgbcolor
     gsave
     currentpoint newpath 7 0 360 arc
     gsave 1 setgray fill grestore
@@ -43,31 +43,31 @@
 % procedures to render a symbol for each prime at the current location
 /primeProcedures
 <<
-  2 { 0 (2) paintSymbol }
-  3 { 1 (3) paintSymbol }
-  5 { 2 (5) paintSymbol }
-  7 { 3 (7) paintSymbol }
-  11 { 4 (11) paintSymbol }
-  13 { 5 (13) paintSymbol }
-  17 { 6 (17) paintSymbol }
-  19 { 7 (19) paintSymbol }
-  23 { 8 (23) paintSymbol }
-  29 { 9 (29) paintSymbol }
-  31 { 10 (31) paintSymbol }
-  37 { 11 (37) paintSymbol }
-  41 { 12 (41) paintSymbol }
-  43 { 13 (43) paintSymbol }
-  47 { 14 (47) paintSymbol }
-  53 { 15 (53) paintSymbol }
-  59 { 16 (59) paintSymbol }
-  61 { 17 (61) paintSymbol }
-  67 { 18 (67) paintSymbol }
-  71 { 19 (71) paintSymbol }
-  73 { 20 (73) paintSymbol }
-  79 { 21 (79) paintSymbol }
-  83 { 22 (83) paintSymbol }
-  89 { 23 (89) paintSymbol }
-  97 { 24 (97) paintSymbol }
+  2 { 1 0 0 (l) paintSymbol }
+  3 { 0 0.8 0 (n) paintSymbol }
+  5 { 0 0 1 (:) paintSymbol }
+  7 { 0 0.7 0.7 (H) paintSymbol }
+  11 { 1 0.75 0 (u) paintSymbol }
+  13 { 0.75 0 1 (6) paintSymbol }
+  17 { 0.3 0.6 0.6 (s) paintSymbol }
+  19 { 0 0 0 (t) paintSymbol }
+  23 { 0 0 0 (v) paintSymbol }
+  29 { 0 0 0 (J) paintSymbol }
+  31 { 0 0 0 (_) paintSymbol }
+  37 { 0 0 0 (3) paintSymbol }
+  41 { 0 0 0 (m) paintSymbol }
+  43 { 0 0 0 (o) paintSymbol }
+  47 { 0 0 0 (=) paintSymbol }
+  53 { 0 0 0 (f) paintSymbol }
+  59 { 0 0 0 <A8> paintSymbol }
+  61 { 0 0 0 <A9> paintSymbol }
+  67 { 0 0 0 <AA> paintSymbol }
+  71 { 0 0 0 <AB> paintSymbol }
+  73 { 0 0 0 <DC> paintSymbol }
+  79 { 0 0 0 <25> paintSymbol }
+  83 { 0 0 0 <2F> paintSymbol }
+  89 { 0 0 0 <41> paintSymbol }
+  97 { 0 0 0 <7E> paintSymbol }
 >> def
 
 /primeFactors {
