@@ -30,8 +30,11 @@
 
 /paintSymbol
 {
+    exch 25 div 1 1 sethsbcolor
     gsave
-    currentpoint newpath 5 0 360 arc 0 setgray fill
+    currentpoint newpath 7 0 360 arc
+    gsave 1 setgray fill grestore
+    0.8 setgray 0.5 setlinewidth stroke
     grestore
     /ZapfDingbats findfont 10 scalefont setfont showCentered
 } def
@@ -40,31 +43,31 @@
 % procedures to render a symbol for each prime at the current location
 /primeProcedures
 <<
-  2 { (2) paintSymbol }
-  3 { (3) paintSymbol }
-  5 { (5) paintSymbol }
-  7 { (7) paintSymbol }
-  11 { (11) paintSymbol }
-  13 { (13) paintSymbol }
-  17 { (17) paintSymbol }
-  19 { (19) paintSymbol }
-  23 { (23) paintSymbol }
-  29 { (29) paintSymbol }
-  31 { (31) paintSymbol }
-  37 { (37) paintSymbol }
-  41 { (41) paintSymbol }
-  43 { (43) paintSymbol }
-  47 { (47) paintSymbol }
-  53 { (53) paintSymbol }
-  59 { (59) paintSymbol }
-  61 { (61) paintSymbol }
-  67 { (67) paintSymbol }
-  71 { (71) paintSymbol }
-  73 { (73) paintSymbol }
-  79 { (79) paintSymbol }
-  83 { (83) paintSymbol }
-  89 { (89) paintSymbol }
-  97 { (97) paintSymbol }
+  2 { 0 (2) paintSymbol }
+  3 { 1 (3) paintSymbol }
+  5 { 2 (5) paintSymbol }
+  7 { 3 (7) paintSymbol }
+  11 { 4 (11) paintSymbol }
+  13 { 5 (13) paintSymbol }
+  17 { 6 (17) paintSymbol }
+  19 { 7 (19) paintSymbol }
+  23 { 8 (23) paintSymbol }
+  29 { 9 (29) paintSymbol }
+  31 { 10 (31) paintSymbol }
+  37 { 11 (37) paintSymbol }
+  41 { 12 (41) paintSymbol }
+  43 { 13 (43) paintSymbol }
+  47 { 14 (47) paintSymbol }
+  53 { 15 (53) paintSymbol }
+  59 { 16 (59) paintSymbol }
+  61 { 17 (61) paintSymbol }
+  67 { 18 (67) paintSymbol }
+  71 { 19 (71) paintSymbol }
+  73 { 20 (73) paintSymbol }
+  79 { 21 (79) paintSymbol }
+  83 { 22 (83) paintSymbol }
+  89 { 23 (89) paintSymbol }
+  97 { 24 (97) paintSymbol }
 >> def
 
 /primeFactors {
@@ -102,7 +105,7 @@
 /xstep 802 11 div def
 /ystep 1150 10 div def
 
-/sRadius xstep 0.2 mul def
+/sRadius xstep 0.3 mul def
 
 % lower left corner of square number n
 /nToLLCorner
@@ -129,7 +132,7 @@
     xstep mul 0 moveto 0 10 ystep mul rlineto stroke
 } for
 
-2 setlinewidth
+3 setlinewidth
 % draw horizontal grid lines
 0 1 10
 { % for y
@@ -164,31 +167,38 @@
 
     gsave
     0.5 xstep mul 12 rmoveto
-    numberFont showCentered
+    0 setgray numberFont showCentered
     grestore
 
     0.5 xstep mul 0.5 ystep mul rmoveto
-
-    gsave
-    0.5 setlinewidth
-    currentpoint newpath sRadius 0 360 arc
-    stroke
-    grestore
 
     primeFactors /pfs exch def
     pfs length /l exch def
     l 0 ne
     { % if
-        360 l div /alpha exch def
-        0 1 l 1 sub
-        { % for
-            gsave
-            dup
-            dup alpha mul cos sRadius mul exch alpha mul sin sRadius mul exch rmoveto
-            pfs exch get
+        l 1 eq
+        { % ifelse
+            pfs 0 get
             primeProcedures exch get exec
+        }
+        { % .. else
+            gsave
+            0.5 setlinewidth 0.8 setgray
+            currentpoint newpath sRadius 0 360 arc
+            stroke
             grestore
-        } for
+
+            360 l div /alpha exch def
+            0 1 l 1 sub
+            { % for
+                gsave
+                dup
+                dup alpha mul cos sRadius mul exch alpha mul sin sRadius mul exch rmoveto
+                pfs exch get
+                primeProcedures exch get exec
+                grestore
+            } for
+        } ifelse
     } if
 } for
 
