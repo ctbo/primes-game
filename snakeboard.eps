@@ -160,6 +160,21 @@
     stroke
 } for
 
+/cap
+{
+    moveto
+    xstep -0.5 mul 0 xstep neg ystep -0.2 mul xstep neg ystep -0.5 mul rcurveto
+    0 ystep -0.3 mul xstep 0.5 mul ystep -0.5 mul xstep ystep -0.5 mul rcurveto
+    stroke
+} def
+
+xstep ystep cap
+xstep 10 ystep mul cap
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% fill all the squares
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 1 1 99
 { % for
     dup dup 2 string cvs exch
