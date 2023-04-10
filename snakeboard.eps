@@ -1,0 +1,178 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: 0 0 842 1190
+%%Creator: Harald Boegeholz
+%%Title: Prime number snake board
+%%Pages: 1
+%%EndComments
+
+% procedures to render a symbol for each prime at the current location
+/primeProcedures
+<<
+  2 { (2) show } bind
+  3 { (3) show } bind
+  5 { (5) show } bind
+  7 { (7) show } bind
+  11 { (11) show } bind
+  13 { (13) show } bind
+  17 { (17) show } bind
+  19 { (19) show } bind
+  23 { (23) show } bind
+  29 { (29) show } bind
+  31 { (31) show } bind
+  37 { (37) show } bind
+  41 { (41) show } bind
+  43 { (43) show } bind
+  47 { (47) show } bind
+  53 { (53) show } bind
+  59 { (59) show } bind
+  61 { (61) show } bind
+  67 { (67) show } bind
+  71 { (71) show } bind
+  73 { (73) show } bind
+  79 { (79) show } bind
+  83 { (83) show } bind
+  89 { (89) show } bind
+  97 { (97) show } bind
+>> def
+
+/primeFactors {
+  /number exch def
+  /currentFactor 2 def
+  [
+    {
+      number 1 eq
+      { exit }
+      {
+        number currentFactor mod 0 eq
+        {
+          number currentFactor idiv
+          /number exch def
+          currentFactor
+        }
+        {
+          /currentFactor currentFactor 1 add def
+        } ifelse
+      } ifelse
+    } loop
+  ]
+} def
+
+% Calculate the midpoint of the bounding box of a string
+/stringMidpoint {
+    gsave
+    newpath
+    0 0 moveto
+    false charpath
+    flattenpath
+    pathbbox
+    /ury exch def
+    /urx exch def
+    /lly exch def
+    /llx exch def
+    urx llx sub 2 div
+    ury lly sub 2 div
+    grestore
+} def
+
+% Show the string centered on the current point
+/showCentered {
+    dup stringMidpoint neg exch neg exch rmoveto
+    show
+} def
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% start drawing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% recall BoundingBox: 0 0 842 1190
+% leave 20pt on each edge, so the board will be 802 x 1150 pt
+20 20 translate
+
+/xstep 802 11 div def
+/ystep 1150 10 div def
+
+/sRadius xstep 0.2 mul def
+
+% lower left corner of square number n
+/nToLLCorner
+{
+    /n exch def
+    n 1 sub 10 mod
+    n 1 sub 10 idiv 2 mod 0 eq {1 add} { 9 exch sub } ifelse
+    xstep mul
+    n 10 idiv
+    n 10 mod 0 eq { 0.5 sub } if
+    ystep mul
+} def
+
+% /ZapfDingbats findfont 10 scalefont setfont
+/numberFont
+{
+    /Helvetica findfont 10 scalefont setfont
+} def
+
+1 setlinewidth
+% draw vertical grid lines
+1 1 10
+{ % for x
+    xstep mul 0 moveto 0 10 ystep mul rlineto stroke
+} for
+
+2 setlinewidth
+% draw horizontal grid lines
+0 1 10
+{ % for y
+    ystep mul xstep exch moveto 9 xstep mul 0 rlineto stroke
+} for
+
+20 20 80
+{ % for n
+    nToLLCorner
+    exch xstep add exch ystep 1.5 mul add moveto
+    xstep -0.5 mul 0 xstep neg ystep -0.2 mul xstep neg ystep -0.5 mul rcurveto
+    0 ystep neg rlineto
+    0 ystep -0.3 mul xstep 0.5 mul ystep -0.5 mul xstep ystep -0.5 mul rcurveto
+    stroke
+    
+} for
+
+10 20 90
+{ % for n
+    nToLLCorner
+    ystep -0.5 mul add moveto
+    xstep 0.5 mul 0 xstep ystep 0.2 mul xstep ystep 0.5 mul rcurveto
+    0 ystep rlineto
+    0 ystep 0.3 mul xstep -0.5 mul ystep 0.5 mul xstep neg ystep 0.5 mul rcurveto
+    stroke
+} for
+
+1 1 99
+{ % for
+    dup dup 2 string cvs exch
+    nToLLCorner moveto
+
+    gsave
+    0.5 xstep mul 12 rmoveto
+    numberFont showCentered
+    grestore
+
+    0.5 xstep mul 0.5 ystep mul rmoveto
+
+    primeFactors /pfs exch def
+    pfs length /l exch def
+    l 0 ne
+    { % if
+        360 l div /alpha exch def
+        0 1 l 1 sub
+        { % for
+            gsave
+            dup
+            dup alpha mul cos sRadius mul exch alpha mul sin sRadius mul exch rmoveto
+            pfs exch get
+            2 string cvs numberFont showCentered
+            grestore
+        } for
+    } if
+} for
