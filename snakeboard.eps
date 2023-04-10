@@ -28,35 +28,43 @@
     show
 } def
 
+/paintSymbol
+{
+    gsave
+    currentpoint newpath 5 0 360 arc 0 setgray fill
+    grestore
+    /ZapfDingbats findfont 10 scalefont setfont showCentered
+} def
+
 
 % procedures to render a symbol for each prime at the current location
 /primeProcedures
 <<
-  2 { numberFont (2) showCentered }
-  3 { /ZapfDingbats findfont 10 scalefont setfont (3) showCentered }
-  5 { (5) showCentered }
-  7 { (7) showCentered }
-  11 { (11) showCentered }
-  13 { (13) showCentered }
-  17 { (17) showCentered }
-  19 { (19) showCentered }
-  23 { (23) showCentered }
-  29 { (29) showCentered }
-  31 { (31) showCentered }
-  37 { (37) showCentered }
-  41 { (41) showCentered }
-  43 { (43) showCentered }
-  47 { (47) showCentered }
-  53 { (53) showCentered }
-  59 { (59) showCentered }
-  61 { (61) showCentered }
-  67 { (67) showCentered }
-  71 { (71) showCentered }
-  73 { (73) showCentered }
-  79 { (79) showCentered }
-  83 { (83) showCentered }
-  89 { (89) showCentered }
-  97 { (97) showCentered }
+  2 { (2) paintSymbol }
+  3 { (3) paintSymbol }
+  5 { (5) paintSymbol }
+  7 { (7) paintSymbol }
+  11 { (11) paintSymbol }
+  13 { (13) paintSymbol }
+  17 { (17) paintSymbol }
+  19 { (19) paintSymbol }
+  23 { (23) paintSymbol }
+  29 { (29) paintSymbol }
+  31 { (31) paintSymbol }
+  37 { (37) paintSymbol }
+  41 { (41) paintSymbol }
+  43 { (43) paintSymbol }
+  47 { (47) paintSymbol }
+  53 { (53) paintSymbol }
+  59 { (59) paintSymbol }
+  61 { (61) paintSymbol }
+  67 { (67) paintSymbol }
+  71 { (71) paintSymbol }
+  73 { (73) paintSymbol }
+  79 { (79) paintSymbol }
+  83 { (83) paintSymbol }
+  89 { (89) paintSymbol }
+  97 { (97) paintSymbol }
 >> def
 
 /primeFactors {
