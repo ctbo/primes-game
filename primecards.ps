@@ -13,9 +13,17 @@
 
 << /PageSize [pageWidth pageHeight] >> setpagedevice
 
-
 /xstep 2.5 72 mul def
 /ystep 3.5 72 mul def
+
+/xoffset pageWidth xstep 3 mul sub 2 div def
+/yoffset pageHeight ystep 3 mul sub 2 div def
+
+/centerOnPage
+{
+    xoffset yoffset translate
+} def
+
 
 /fontCardNo
 {
@@ -145,27 +153,31 @@
 
     0 1 3
     {
-        xstep mul 0 moveto 0 pageHeight rlineto stroke
+        xstep mul xoffset add 0 moveto 0 pageHeight rlineto stroke
     } for
 
     0 1 3
     {
-        ystep mul 0 exch moveto pageWidth 0 rlineto stroke
+        ystep mul yoffset add 0 exch moveto pageWidth 0 rlineto stroke
     } for
 } def
 
 /background
 {
-    0 0 moveto 3 xstep mul 0 rlineto 0 3 ystep mul rlineto -3 xstep mul 0 rlineto closepath
-    fill
+    -10 -10 moveto
+    3 xstep mul 20 add 0 rlineto
+    0 3 ystep mul 20 add rlineto
+    -3 xstep mul -20 add 0 rlineto
+    closepath fill
 } def
 
 cardPrimes
 { % forall
     /primes exch def
     /cardno exch def
-    /i 0 def
-    20 20 translate
+
+    grid
+    centerOnPage
     0 setgray background
 
     /paintSymbol
@@ -174,6 +186,7 @@ cardPrimes
         fontDingbats showCentered
     } def
     
+    /i 0 def
     primes
     { % forall
         pop
@@ -205,10 +218,11 @@ cardPrimes
     } forall
     showpage
 
-    20 20 translate
+    grid
+    centerOnPage
 
     /i 0 def
-    grid
+    1 setgray background
     /paintSymbol
     {
         7 1 roll setrgbcolor pop pop pop
