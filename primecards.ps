@@ -20,6 +20,11 @@
     /Helvetica-Bold findfont 120 scalefont setfont
 } def
 
+/fontDingbats
+{
+    /ZapfDingbats findfont 16 scalefont setfont
+} def
+
 % Calculate the midpoint of the bounding box of a string
 /stringMidpoint {
     gsave
@@ -51,13 +56,15 @@
     gsave 1 setgray fill grestore
     % 0.8 setgray 0.5 setlinewidth stroke
     grestore
-    /ZapfDingbats findfont 16 scalefont setfont showCentered
+    fontDingbats showCentered
 } def
 
 
 % procedures to render a symbol for each prime at the current location
 /primeProcedures
-<<
+<<  % rgb color followed by code in Zapf Dingbats font
+    % each procedure can be replaced by any code to draw a symbol
+    % at current point
     2 { 1 0 0 <6C> paintSymbol }
     3 { 0 0.8 0 <6E> paintSymbol }
     5 { 0 0 1 <3A> paintSymbol }
@@ -86,7 +93,7 @@
 >> def
 
 /cardPrimes
-<<
+<< % each prime produces one card. Code assumes there are 10 for each card.
     1  [2 3 3 3 5 7 11 13 17 19]
     2  [2 2 2 2 2 3 5 7 23 29]
     3  [2 3 5 7 11 13 17 19 31 37]
@@ -99,7 +106,7 @@
 >> def
 
 /cardColors
-<<
+<< % first triple is fill color, second triple is stroke color
     1 [0.7 0.7 0.7  0.7 0.7 0.7]
     2 [1 0 0  1 0 0]
     3 [0 0.8 0  0 0.8 0]
