@@ -32,11 +32,11 @@
 {
     4 1 roll setrgbcolor
     gsave
-    currentpoint newpath 9 0 360 arc
+    currentpoint newpath 10 0 360 arc
     gsave 1 setgray fill grestore
     % 0.8 setgray 0.5 setlinewidth stroke
     grestore
-    /ZapfDingbats findfont 12 scalefont setfont showCentered
+    /ZapfDingbats findfont 18 scalefont setfont showCentered
 } def
 
 
@@ -44,20 +44,20 @@
 /primeProcedures
 <<
     2 { 1 0 0 <6C> paintSymbol }
-    3 { 0 0.8 0 <6E> paintSymbol }
+    3 { 0 1 0 <6E> paintSymbol }
     5 { 0 0 1 <3A> paintSymbol }
     7 { 1 0.75 0 <48> paintSymbol }
-    11 { 0 0.7 0.7 <75> paintSymbol }
-    13 { 0.75 0 1 <36> paintSymbol }
-    17 { 0.3 0.6 0.6 <73> paintSymbol }
-    19 { 0 0 0 <74> paintSymbol }
-    23 { 0 0 0 <76> paintSymbol }
-    29 { 0 0 0 <4A> paintSymbol }
-    31 { 0 0 0 <5F> paintSymbol }
-    37 { 0 0 0 <33> paintSymbol }
-    41 { 0 0 0 <6D> paintSymbol }
-    43 { 0 0 0 <6F> paintSymbol }
-    47 { 0 0 0 <3D> paintSymbol }
+    11 { 0.2 1 1 <75> paintSymbol }
+    13 { 0.2 1 1 <36> paintSymbol }
+    17 { 0.2 1 1 <73> paintSymbol }
+    19 { 0.2 1 1 <74> paintSymbol }
+    23 { 0.75 0 1 <76> paintSymbol }
+    29 { 0.75 0 1 <4A> paintSymbol }
+    31 { 0 0.6 0.6 <5F> paintSymbol }
+    37 { 0 0.6 0.6 <33> paintSymbol }
+    41 { 1 0.7 1 <6D> paintSymbol }
+    43 { 1 0.7 1 <6F> paintSymbol }
+    47 { 1 0.7 1 <3D> paintSymbol }
     53 { 0 0 0 <66> paintSymbol }
     59 { 0 0 0 <A8> paintSymbol }
     61 { 0 0 0 <A9> paintSymbol }
@@ -99,6 +99,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % recall BoundingBox: 0 0 842 1190
+0 0 moveto 842 0 lineto 842 1190 lineto 0 1190 lineto closepath 0.7 setgray fill
+
 % leave 20pt on each edge, so the board will be 802 x 1150 pt
 20 20 translate
 
@@ -125,6 +127,10 @@
     /Helvetica findfont 10 scalefont setfont
 } def
 
+xstep 0 moveto xstep 9 mul 0 rlineto 0 ystep 10 mul rlineto xstep -9 mul 0 rlineto closepath
+1 setgray fill
+
+0 setgray
 1 setlinewidth
 % draw vertical grid lines
 1 1 10
@@ -145,7 +151,11 @@
     exch xstep add exch ystep 1.5 mul add moveto
     xstep -0.5 mul 0 xstep neg ystep -0.2 mul xstep neg ystep -0.5 mul rcurveto
     0 ystep neg rlineto
-    0 ystep -0.3 mul xstep 0.5 mul ystep -0.5 mul xstep ystep -0.5 mul rcurveto
+    0 ystep -0.3 mul xstep 0.5 mul ystep -0.5 mul xstep ystep -0.5 mul rcurveto closepath
+    gsave
+    1 setgray fill
+    grestore
+    0 setgray
     stroke
     
 } for
@@ -156,7 +166,11 @@
     ystep -0.5 mul add moveto
     xstep 0.5 mul 0 xstep ystep 0.2 mul xstep ystep 0.5 mul rcurveto
     0 ystep rlineto
-    0 ystep 0.3 mul xstep -0.5 mul ystep 0.5 mul xstep neg ystep 0.5 mul rcurveto
+    0 ystep 0.3 mul xstep -0.5 mul ystep 0.5 mul xstep neg ystep 0.5 mul rcurveto closepath
+    gsave
+    1 setgray fill
+    grestore
+    0 setgray
     stroke
 } for
 
@@ -164,13 +178,31 @@
 {
     moveto
     xstep -0.5 mul 0 xstep neg ystep -0.2 mul xstep neg ystep -0.5 mul rcurveto
-    0 ystep -0.3 mul xstep 0.5 mul ystep -0.5 mul xstep ystep -0.5 mul rcurveto
+    0 ystep -0.3 mul xstep 0.5 mul ystep -0.5 mul xstep ystep -0.5 mul rcurveto closepath
+    gsave
+    1 setgray fill
+    grestore
+    0 setgray
     stroke
 } def
 
 xstep ystep cap
 xstep 10 ystep mul cap
 
+0 setgray
+1 setlinewidth
+% draw vertical grid lines
+1 1 10
+{ % for x
+    xstep mul 0 moveto 0 10 ystep mul rlineto stroke
+} for
+
+3 setlinewidth
+% draw horizontal grid lines
+0 1 10
+{ % for y
+    ystep mul xstep exch moveto 9 xstep mul 0 rlineto stroke
+} for
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % fill all the squares
