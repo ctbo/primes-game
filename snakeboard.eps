@@ -5,6 +5,11 @@
 %%Pages: 1
 %%EndComments
 
+/fontDingbats
+{
+    /ZapfDingbats findfont 18 scalefont setfont
+} def
+
 % Calculate the midpoint of the bounding box of a string
 /stringMidpoint {
     gsave
@@ -30,44 +35,48 @@
 
 /paintSymbol
 {
-    4 1 roll setrgbcolor
+    % fill white circle for the symbol
     gsave
     currentpoint newpath 10 0 360 arc
     gsave 1 setgray fill grestore
-    % 0.8 setgray 0.5 setlinewidth stroke
     grestore
-    /ZapfDingbats findfont 18 scalefont setfont showCentered
+
+    7 1 roll setrgbcolor pop pop pop
+    fontDingbats showCentered
 } def
 
 
 % procedures to render a symbol for each prime at the current location
 /primeProcedures
-<<
-    2 { 1 0 0 <6C> paintSymbol }
-    3 { 0 1 0 <6E> paintSymbol }
-    5 { 0 0 1 <3A> paintSymbol }
-    7 { 1 0.75 0 <48> paintSymbol }
-    11 { 0.2 1 1 <75> paintSymbol }
-    13 { 0.2 1 1 <36> paintSymbol }
-    17 { 0.2 1 1 <73> paintSymbol }
-    19 { 0.2 1 1 <74> paintSymbol }
-    23 { 0.75 0 1 <76> paintSymbol }
-    29 { 0.75 0 1 <4A> paintSymbol }
-    31 { 0 0.6 0.6 <5F> paintSymbol }
-    37 { 0 0.6 0.6 <33> paintSymbol }
-    41 { 1 0.7 1 <6D> paintSymbol }
-    43 { 1 0.7 1 <6F> paintSymbol }
-    47 { 1 0.7 1 <3D> paintSymbol }
-    53 { 0 0 0 <66> paintSymbol }
-    59 { 0 0 0 <A8> paintSymbol }
-    61 { 0 0 0 <A9> paintSymbol }
-    67 { 0 0 0 <AA> paintSymbol }
-    71 { 0 0 0 <AB> paintSymbol }
-    73 { 0 0 0 <DC> paintSymbol }
-    79 { 0 0 0 <25> paintSymbol }
-    83 { 0 0 0 <2F> paintSymbol }
-    89 { 0 0 0 <41> paintSymbol }
-    97 { 0 0 0 <7E> paintSymbol }
+<<  % rgb color for black background followed by rgb color for white background
+    % followed by code in Zapf Dingbats font
+    % each procedure can be replaced by any code to draw a symbol
+    % at current point
+    2 { 1 0 0  1 0 0 <6C> paintSymbol }
+    3 { 0 1 0  0 1 0 <6E> paintSymbol }
+    5 { 0 0 1  0 0 1 <3A> paintSymbol }
+    7 { 1 0.75 0  1 0.75 0 <48> paintSymbol }
+    11 { 0.2 1 1  0.2 1 1 <75> paintSymbol }
+    13 { 0.2 1 1  0.2 1 1 <36> paintSymbol }
+    17 { 0.2 1 1  0.2 1 1 <73> paintSymbol }
+    19 { 0.2 1 1  0.2 1 1 <74> paintSymbol }
+    23 { 0.75 0 1  0.75 0 1 <76> paintSymbol }
+    29 { 0.75 0 1  0.75 0 1 <4A> paintSymbol }
+    31 { 0 0.6 0.6  0 0.6 0.6 <5F> paintSymbol }
+    37 { 0 0.6 0.6  0 0.6 0.6 <33> paintSymbol }
+    41 { 1 0.7 1  1 0.7 1 <6D> paintSymbol }
+    43 { 1 0.7 1  1 0.7 1 <6F> paintSymbol }
+    47 { 1 0.7 1  1 0.7 1 <3D> paintSymbol }
+    53 { 1 1 1  0 0 0 <66> paintSymbol }
+    59 { 1 1 1  0 0 0 <A8> paintSymbol }
+    61 { 1 1 1  0 0 0 <A9> paintSymbol }
+    67 { 1 1 1  0 0 0 <AA> paintSymbol }
+    71 { 1 1 1  0 0 0 <AB> paintSymbol }
+    73 { 1 1 1  0 0 0 <DC> paintSymbol }
+    79 { 1 1 1  0 0 0 <25> paintSymbol }
+    83 { 1 1 1  0 0 0 <2F> paintSymbol }
+    89 { 1 1 1  0 0 0 <41> paintSymbol }
+    97 { 1 1 1  0 0 0 <7E> paintSymbol }
 >> def
 
 /primeFactors {
