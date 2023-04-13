@@ -223,15 +223,16 @@ cardPrimes
 
     /i 0 def
     1 setgray background
-    /paintSymbol
-    {
-        7 1 roll setrgbcolor pop pop pop
-        fontDingbatsLarge showCentered
-    } def
 
     primes
     { % forall
         2 i 3 mod sub xstep mul i 3 idiv ystep mul moveto
+
+        /paintSymbol
+        {
+            7 1 roll setrgbcolor pop pop pop
+            fontDingbats showCentered
+        } def
 
         gsave
         0.1 xstep mul 0.9 ystep mul rmoveto
@@ -240,11 +241,27 @@ cardPrimes
         grestore
 
         gsave
+        0.1 xstep mul 0.78 ystep mul rmoveto
+        dup primeProcedures exch get exec
+        grestore
+
+        gsave
         0.9 xstep mul 0.1 ystep mul rmoveto
         0 setgray
         cardno flippedCardNo
         grestore
 
+        gsave
+        0.9 xstep mul 0.22 ystep mul rmoveto
+        180 rotate
+        dup primeProcedures exch get exec
+        grestore
+
+        /paintSymbol
+        {
+            7 1 roll setrgbcolor pop pop pop
+            fontDingbatsLarge showCentered
+        } def
         0.5 xstep mul 0.5 ystep mul rmoveto
         primeProcedures exch get exec
         /i i 1 add def
