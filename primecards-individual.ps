@@ -133,10 +133,11 @@
     closepath fill
 } def
 
-cardPrimes
-{ % forall
-    /primes exch def
+0 1 9
+{ % for
     /cardno exch def
+    cardPrimes cardno get
+    /primes exch def
 
     0 setgray background
 
@@ -217,6 +218,6 @@ cardPrimes
         primeProcedures exch get exec
         showpage
     } forall
-} forall
+} for
 
 %%EOF
