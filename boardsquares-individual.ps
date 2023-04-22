@@ -1,0 +1,172 @@
+%!PS
+%%Creator: Harald Boegeholz
+%%Title: individual board squares for prime number game
+%%Orientation: Portrait
+%%Pages: (atend)
+%%EndComments
+
+/pageWidth 180 def
+/pageHeight 252 def
+
+<< /PageSize [pageWidth pageHeight] >> setpagedevice
+
+/xstep pageWidth def
+/ystep pageHeight def
+
+
+/fontDingbats
+{
+    /ZapfDingbats findfont 50 scalefont setfont
+} def
+
+% Calculate the midpoint of the bounding box of a string
+/stringMidpoint {
+    gsave
+    newpath
+    0 0 moveto
+    false charpath
+    flattenpath
+    pathbbox
+    /ury exch def
+    /urx exch def
+    /lly exch def
+    /llx exch def
+    urx llx sub 2 div
+    ury lly sub 2 div
+    grestore
+} def
+
+% Show the string centered on the current point
+/showCentered {
+    dup stringMidpoint neg exch neg exch rmoveto
+    show
+} def
+
+/paintSymbol
+{
+    % fill white circle for the symbol
+    gsave
+    currentpoint newpath 24 0 360 arc
+    gsave 1 setgray fill grestore
+    grestore
+
+    7 1 roll setrgbcolor pop pop pop
+    fontDingbats showCentered
+} def
+
+
+% procedures to render a symbol for each prime at the current location
+/primeProcedures
+<<  % rgb color for black background followed by rgb color for white background
+    % followed by code in Zapf Dingbats font
+    % each procedure can be replaced by any code to draw a symbol
+    % at current point
+    2 { 1 0 0  1 0 0 <6C> paintSymbol }
+    3 { 0 1 0  0 1 0 <6E> paintSymbol }
+    5 { 0 0 1  0 0 1 <3A> paintSymbol }
+    7 { 1 0.75 0  1 0.75 0 <48> paintSymbol }
+    11 { 0.2 1 1  0.2 1 1 <75> paintSymbol }
+    13 { 0.2 1 1  0.2 1 1 <36> paintSymbol }
+    17 { 0.2 1 1  0.2 1 1 <73> paintSymbol }
+    19 { 0.2 1 1  0.2 1 1 <76> paintSymbol }
+    23 { 0.75 0 1  0.75 0 1 <74> paintSymbol }
+    29 { 0.75 0 1  0.75 0 1 <4A> paintSymbol }
+    31 { 0 0.6 0.6  0 0.6 0.6 <5F> paintSymbol }
+    37 { 0 0.6 0.6  0 0.6 0.6 <33> paintSymbol }
+    41 { 1 0.7 1  1 0.7 1 <6D> paintSymbol }
+    43 { 1 0.7 1  1 0.7 1 <6F> paintSymbol }
+    47 { 1 0.7 1  1 0.7 1 <3D> paintSymbol }
+    53 { 1 1 1  0 0 0 <66> paintSymbol }
+    59 { 1 1 1  0 0 0 <A8> paintSymbol }
+    61 { 1 1 1  0 0 0 <A9> paintSymbol }
+    67 { 1 1 1  0 0 0 <AA> paintSymbol }
+    71 { 1 1 1  0 0 0 <AB> paintSymbol }
+    73 { 1 1 1  0 0 0 <DC> paintSymbol }
+    79 { 1 1 1  0 0 0 <25> paintSymbol }
+    83 { 1 1 1  0 0 0 <2F> paintSymbol }
+    89 { 1 1 1  0 0 0 <41> paintSymbol }
+    97 { 1 1 1  0 0 0 <7E> paintSymbol }
+>> def
+
+/primeFactors {
+  /number exch def
+  /currentFactor 2 def
+  [
+    { % loop
+      number 1 le
+      { exit }
+      {
+        number currentFactor mod 0 eq
+        {
+          number currentFactor idiv
+          /number exch def
+          currentFactor
+        }
+        {
+          /currentFactor currentFactor 1 add def
+        } ifelse
+      } ifelse
+    } loop
+  ]
+} def
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% start drawing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+/sRadius xstep 0.3 mul def
+
+/numberFont
+{
+    /Helvetica findfont 24 scalefont setfont
+} def
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% fill all the squares
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+0 1 100
+{ % for
+    dup 3 string cvs
+    0 0 moveto
+
+    gsave
+    0.5 xstep mul 24 rmoveto
+    0 setgray numberFont showCentered
+    grestore
+
+    0.5 xstep mul 0.5 ystep mul rmoveto
+
+    primeFactors /pfs exch def
+    pfs length /l exch def
+    l 0 ne
+    { % if
+        l 1 eq
+        { % ifelse
+            pfs 0 get
+            primeProcedures exch get exec
+        }
+        { % .. else
+            gsave
+            0.5 setlinewidth 0.8 setgray
+            currentpoint newpath sRadius 0 360 arc
+            stroke
+            grestore
+
+            360 l div /alpha exch def
+            0 1 l 1 sub
+            { % for
+                gsave
+                dup
+                dup alpha mul cos sRadius mul exch alpha mul sin sRadius mul exch rmoveto
+                pfs exch get
+                primeProcedures exch get exec
+                grestore
+            } for
+        } ifelse
+    } if
+    showpage
+} for
+
