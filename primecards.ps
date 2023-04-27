@@ -3,7 +3,6 @@
 %%Title: Cards for prime number game
 %%DocumentMedia: A4
 %%Orientation: Portrait
-%%BoundingBox: 0 0 595 842
 %%Pages: (atend)
 %%EndComments
 
@@ -13,11 +12,18 @@
 
 << /PageSize [pageWidth pageHeight] >> setpagedevice
 
+% playing cards are 2.5 x 3.5 inches
 /xstep 2.5 72 mul def
 /ystep 3.5 72 mul def
 
-/xoffset pageWidth xstep 3 mul sub 2 div def
-/yoffset pageHeight ystep 3 mul sub 2 div def
+/x 0 def
+/y 0 def
+
+/xmax 2 def
+/ymax 2 def
+
+/xoffset pageWidth xstep xmax 1 add mul sub 2 div def
+/yoffset pageHeight ystep ymax 1 add mul sub 2 div def
 
 /centerOnPage
 {
@@ -66,7 +72,6 @@
 /rotatedShow {
     gsave
     180 rotate
-    % -1 -1 scale
     showCentered
     grestore
 } def
@@ -107,16 +112,16 @@
 
 /cardPrimes
 << % each line produces one card. Code assumes there are 9 symbols for each card.
-    1  [11 2 13 3 2 3 17 2 19]
-    2  [23 2 29 3 2 3 2 2 2]
-    3  [11 5 13 31 3 37 17 2 19]
-    4  [23 5 29 41 43 47 2 7 3]
-    5  [11 5 13 53 3 59 17 7 19]
-    6  [23 5 29 31 3 37 61 7 67]
-    7  [11 5 13 71 73 79 17 7 19]
-    8  [23 5 29 41 43 47 83 7 89]
-    9  [11 5 13 31 97 37 17 7 19]
-    0  [3 2 3 3 2 3 2 2 2]
+    1  [2 11 2 13 3 2 3 17 2 19]
+    2  [2 23 2 29 3 2 3 2 2 2]
+    3  [2 11 5 13 31 3 37 17 2 19]
+    4  [2 23 5 29 41 43 47 2 7 3]
+    5  [2 11 5 13 53 3 59 17 7 19]
+    6  [2 23 5 29 31 3 37 61 7 67]
+    7  [2 11 5 13 71 73 79 17 7 19]
+    8  [2 23 5 29 41 43 47 83 7 89]
+    9  [2 11 5 13 31 97 37 17 7 19]
+    0  [2 3 2 3 3 2 3 2 2 2]
 >> def
 
 /drawCardNo
@@ -139,12 +144,12 @@
     0 setgray
     0.5 setlinewidth
 
-    0 1 3
+    0 1 xmax 1 add
     {
         xstep mul xoffset add 0 moveto 0 pageHeight rlineto stroke
     } for
 
-    0 1 3
+    0 1 ymax 1 add
     {
         ystep mul yoffset add 0 exch moveto pageWidth 0 rlineto stroke
     } for
@@ -152,21 +157,120 @@
 
 /background
 {
-    -10 -10 moveto
-    3 xstep mul 20 add 0 rlineto
-    0 3 ystep mul 20 add rlineto
-    -3 xstep mul -20 add 0 rlineto
+    setgray
+    xoffset yoffset moveto
+    -10 -10 rmoveto
+    xmax 1 add xstep mul 20 add 0 rlineto
+    0 ymax 1 add ystep mul 20 add rlineto
+    xmax 1 add xstep mul 20 add neg 0 rlineto
     closepath fill
 } def
 
-cardPrimes
-{ % forall
-    /primes exch def
-    /cardno exch def
+/startCardFront
+{
+    % (startCardFront) = x = y =
+    x 0 eq y 0 eq and
+    { % if
+        grid
+        0.8 background
+        [
+    } if
+    gsave
+    x xstep mul xoffset add y ystep mul yoffset add translate
+} def
 
-    grid
-    centerOnPage
-    0 setgray background
+/endCardFront
+{
+    grestore
+    /x x 1 add def
+    x xmax gt
+    { % if
+        /x 0 def
+        /y y 1 add def
+        y ymax gt
+        { % if
+            /x 0 def
+            /y 0 def
+            showpage
+        } if
+    } if
+} def
+
+/startCardBack
+{
+    % (startCardBack) = x = y =
+    x 0 eq y 0 eq and
+    { %if
+        grid
+        0 background
+    } if
+    gsave
+    xmax x sub xstep mul xoffset add y ystep mul yoffset add translate
+} def
+
+/endCardBack
+{
+    grestore
+    /x x 1 add def
+    x xmax gt
+    { % if
+        /x 0 def
+        /y y 1 add def
+        y ymax gt
+        { % if
+            /x 0 def
+            /y 0 def
+            showpage
+        } if
+    } if
+} def
+
+
+/drawCardFront
+{ % expecting prime and cardno on the stack
+    0.1 xstep mul 0.9 ystep mul moveto
+    0 setgray
+    dup drawCardNo
+
+    0.9 xstep mul 0.1 ystep mul moveto
+    0 setgray
+    flippedCardNo
+
+    primeProcedures exch get
+    
+    /paintSymbol
+    {
+        7 1 roll setrgbcolor pop pop pop
+        fontDingbats showCentered
+    } def
+
+    0.1 xstep mul 0.78 ystep mul moveto
+    dup exec
+
+    0.9 xstep mul 0.22 ystep mul moveto
+    gsave
+    180 rotate
+    dup exec
+    grestore
+    
+    /paintSymbol
+    {
+        7 1 roll setrgbcolor pop pop pop
+        fontDingbatsLarge showCentered
+    } def
+    0.5 xstep mul 0.5 ystep mul moveto
+    exec
+} def
+
+/drawCardBack
+{ % expecting primes and cardno on the stack
+    0.1 xstep mul 0.9 ystep mul moveto
+    1 setgray
+    dup drawCardNo
+
+    0.9 xstep mul 0.1 ystep mul moveto
+    1 setgray
+    flippedCardNo
 
     /paintSymbol
     {
@@ -174,87 +278,60 @@ cardPrimes
         fontDingbats showCentered
     } def
     
-    /i 0 def
-    primes
+    /j 0 def
+    % primes array is on top of stack
     { % forall
-        pop
-        i 3 mod xstep mul i 3 idiv ystep mul moveto
-
-        gsave
-        0.1 xstep mul 0.9 ystep mul rmoveto
-        1 setgray
-        cardno drawCardNo
-        grestore
-
-        gsave
-        0.9 xstep mul 0.1 ystep mul rmoveto
-        1 setgray
-        cardno flippedCardNo
-        grestore
-
-        /j 0 def
-        primes
-        { % forall
-            gsave
-            xstep 0.35 mul ystep 0.65 mul rmoveto
-            j 3 mod xstep mul 0.15 mul j 3 idiv ystep mul -0.15 mul rmoveto
-            primeProcedures exch get exec
-            grestore
-            /j j 1 add def
-        } forall
-        /i i 1 add def
-    } forall
-    showpage
-
-    grid
-    centerOnPage
-
-    /i 0 def
-    1 setgray background
-
-    primes
-    { % forall
-        2 i 3 mod sub xstep mul i 3 idiv ystep mul moveto
-
-        /paintSymbol
-        {
-            7 1 roll setrgbcolor pop pop pop
-            fontDingbats showCentered
-        } def
-
-        gsave
-        0.1 xstep mul 0.9 ystep mul rmoveto
-        0 setgray
-        cardno drawCardNo
-        grestore
-
-        gsave
-        0.1 xstep mul 0.78 ystep mul rmoveto
-        dup primeProcedures exch get exec
-        grestore
-
-        gsave
-        0.9 xstep mul 0.1 ystep mul rmoveto
-        0 setgray
-        cardno flippedCardNo
-        grestore
-
-        gsave
-        0.9 xstep mul 0.22 ystep mul rmoveto
-        180 rotate
-        dup primeProcedures exch get exec
-        grestore
-
-        /paintSymbol
-        {
-            7 1 roll setrgbcolor pop pop pop
-            fontDingbatsLarge showCentered
-        } def
-        0.5 xstep mul 0.5 ystep mul rmoveto
+        xstep 0.35 mul ystep 0.65 mul moveto
+        j 3 mod xstep mul 0.15 mul j 3 idiv ystep mul -0.15 mul rmoveto
         primeProcedures exch get exec
-        /i i 1 add def
+        /j j 1 add def
     } forall
-    showpage
+} def
+
+/flushDeferredCards
+{
+    ]
+    {
+        startCardBack
+        aload pop
+        drawCardBack
+        endCardBack
+    } forall
+} def
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% main loop to draw all cards
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+cardPrimes
+{ % forall
+    /primes exch def
+    /cardno exch def
+
+    primes
+    { % forall
+        /prime exch def
+        startCardFront
+        prime cardno drawCardFront
+        endCardFront
+
+        [ % defer painting the back of the card
+            primes cardno
+        ] 
+        
+        x 0 eq y 0 eq and
+        {
+            flushDeferredCards
+        } if
+    } forall
 } forall
+
+x 0 eq y 0 eq and not
+{ % if
+    /x 0 def /y 0 def
+    showpage
+    flushDeferredCards
+    showpage
+} if
 
 %%EOF
