@@ -8,7 +8,7 @@
 % Configure this for different sets of cards, symbols, colours ...
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-false % set to true to produce individual pages for each card
+false % set to true to produce individual pages for each card face
 
 /cardPrimes
 <<  % each line produces cards with the given number, one for each prime
@@ -288,11 +288,21 @@ false % set to true to produce individual pages for each card
         fontDingbats showCentered
     } def
     
-    /j 0 def
     % primes array is on top of stack
+    dup length
+    dup sqrt cvi dup /symbols-per-row exch def
+    div ceiling cvi /nrows exch def
+    /symbol-spacing 0.17 xstep mul def
+    /symbol-x-offset xstep symbols-per-row 1 sub symbol-spacing mul sub 2 div def
+    /symbol-y-offset ystep nrows 1 sub symbol-spacing mul sub 2 div def
+    
+    /j 0 def
+    % primes array is still on top of stack
     { % forall
-        xstep 0.35 mul ystep 0.65 mul moveto
-        j 3 mod xstep mul 0.15 mul j 3 idiv ystep mul -0.15 mul rmoveto
+        j symbols-per-row mod symbol-spacing mul symbol-x-offset add 
+        nrows j symbols-per-row idiv sub 1 sub
+        symbol-spacing mul symbol-y-offset add
+        moveto
         primeProcedures exch get exec
         /j j 1 add def
     } forall
@@ -310,7 +320,7 @@ false % set to true to produce individual pages for each card
 } def
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% main loop to draw all cards
+% main loop to produce all cards
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 /x 0 def
