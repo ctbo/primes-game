@@ -8,6 +8,8 @@
 % Configure this for different sets of cards, symbols, colours ...
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+false % set to true to produce individual pages for each card
+
 /cardPrimes
 <<  % each line produces cards with the given number, one for each prime
     % given in the array
@@ -64,7 +66,6 @@
 /xstep 2.5 72 mul def
 /ystep 3.5 72 mul def
 
-false % set to true to produce individual cards
 { % make card-sized pages with one card face each
     /pageWidth xstep def
     /pageHeight ystep def
