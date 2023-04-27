@@ -6,30 +6,33 @@
 %%Pages: (atend)
 %%EndComments
 
-
-/pageWidth 595 def
-/pageHeight 842 def
-
-<< /PageSize [pageWidth pageHeight] >> setpagedevice
-
 % playing cards are 2.5 x 3.5 inches
 /xstep 2.5 72 mul def
 /ystep 3.5 72 mul def
 
-/x 0 def
-/y 0 def
+false % set to true to produce individual cards
+{ % make card-sized pages with one card face each
+    /pageWidth xstep def
+    /pageHeight ystep def
+    
+    << /PageSize [pageWidth pageHeight] >> setpagedevice
 
-/xmax 2 def
-/ymax 2 def
+    /xmax 0 def
+    /ymax 0 def
+}
+{ % make A4 pages with 9 cards each
+    /pageWidth 595 def
+    /pageHeight 842 def
+
+    << /PageSize [pageWidth pageHeight] >> setpagedevice
+
+    /xmax 2 def
+    /ymax 2 def
+} ifelse
+
 
 /xoffset pageWidth xstep xmax 1 add mul sub 2 div def
 /yoffset pageHeight ystep ymax 1 add mul sub 2 div def
-
-/centerOnPage
-{
-    xoffset yoffset translate
-} def
-
 
 /fontCardNo
 {
@@ -302,6 +305,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % main loop to draw all cards
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+/x 0 def
+/y 0 def
 
 cardPrimes
 { % forall
