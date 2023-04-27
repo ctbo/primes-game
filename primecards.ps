@@ -172,11 +172,11 @@
     x 0 eq y 0 eq and
     { % if
         grid
-        0.8 background
+        1 background
         [
     } if
     gsave
-    x xstep mul xoffset add y ystep mul yoffset add translate
+    x xstep mul xoffset add ymax y sub ystep mul yoffset add translate
 } def
 
 /endCardFront
@@ -205,7 +205,7 @@
         0 background
     } if
     gsave
-    xmax x sub xstep mul xoffset add y ystep mul yoffset add translate
+    xmax x sub xstep mul xoffset add ymax y sub ystep mul yoffset add translate
 } def
 
 /endCardBack
