@@ -1,14 +1,11 @@
-%!PS-Adobe-3.0 EPSF-3.0
+%!PS-Adobe-3.0
 %%BoundingBox: 0 0 842 1190
 %%Creator: Harald Boegeholz
 %%Title: Prime number snake board
 %%Pages: 1
 %%EndComments
 
-/fontDingbats
-{
-    /ZapfDingbats findfont 18 scalefont setfont
-} def
+<< /PageSize [842 1190] >> setpagedevice
 
 % Calculate the midpoint of the bounding box of a string
 /stringMidpoint {
@@ -48,36 +45,53 @@
 
 % procedures to render a symbol for each prime at the current location
 /primeProcedures
-<<  % rgb color for black background followed by rgb color for white background
-    % followed by code in Zapf Dingbats font
-    % each procedure can be replaced by any code to draw a symbol
+<<  % each procedure can be replaced by any code to draw a symbol
     % at current point
-    2 { 1 0 0  1 0 0 <6C> paintSymbol }
-    3 { 0 1 0  0 1 0 <6E> paintSymbol }
-    5 { 0 0 1  0 0 1 <3A> paintSymbol }
-    7 { 1 0.75 0  1 0.75 0 <48> paintSymbol }
-    11 { 0.2 1 1  0.2 1 1 <75> paintSymbol }
-    13 { 0.2 1 1  0.2 1 1 <36> paintSymbol }
-    17 { 0.2 1 1  0.2 1 1 <73> paintSymbol }
-    19 { 0.2 1 1  0.2 1 1 <76> paintSymbol }
-    23 { 0.75 0 1  0.75 0 1 <74> paintSymbol }
-    29 { 0.75 0 1  0.75 0 1 <4A> paintSymbol }
-    31 { 0 0.6 0.6  0 0.6 0.6 <5F> paintSymbol }
-    37 { 0 0.6 0.6  0 0.6 0.6 <33> paintSymbol }
-    41 { 1 0.7 1  1 0.7 1 <6D> paintSymbol }
-    43 { 1 0.7 1  1 0.7 1 <6F> paintSymbol }
-    47 { 1 0.7 1  1 0.7 1 <3D> paintSymbol }
-    53 { 1 1 1  0 0 0 <66> paintSymbol }
-    59 { 1 1 1  0 0 0 <A8> paintSymbol }
-    61 { 1 1 1  0 0 0 <A9> paintSymbol }
-    67 { 1 1 1  0 0 0 <AA> paintSymbol }
-    71 { 1 1 1  0 0 0 <AB> paintSymbol }
-    73 { 1 1 1  0 0 0 <DC> paintSymbol }
-    79 { 1 1 1  0 0 0 <25> paintSymbol }
-    83 { 1 1 1  0 0 0 <2F> paintSymbol }
-    89 { 1 1 1  0 0 0 <41> paintSymbol }
-    97 { 1 1 1  0 0 0 <7E> paintSymbol }
+    2 { startSymbol (resources/2.eps) run endSymbol}
+    3 { startSymbol (resources/3.eps) run endSymbol}
+    5 { startSymbol (resources/5.eps) run endSymbol}
+    7 { startSymbol (resources/7.eps) run endSymbol}
+    11 { startSymbol (resources/11.eps) run endSymbol}
+    13 { startSymbol (resources/13.eps) run endSymbol}
+    17 { startSymbol (resources/17.eps) run endSymbol}
+    19 { startSymbol (resources/19.eps) run endSymbol}
+    23 { startSymbol (resources/23.eps) run endSymbol}
+    29 { startSymbol (resources/29.eps) run endSymbol}
+    31 { startSymbol (resources/31.eps) run endSymbol}
+    37 { startSymbol (resources/37.eps) run endSymbol}
+    41 { startSymbol (resources/41.eps) run endSymbol}
+    43 { startSymbol (resources/43.eps) run endSymbol}
+    47 { startSymbol (resources/47.eps) run endSymbol}
+    53 { startSymbol (resources/53.eps) run endSymbol}
+    59 { startSymbol (resources/59.eps) run endSymbol}
+    61 { startSymbol (resources/61.eps) run endSymbol}
+    67 { startSymbol (resources/67.eps) run endSymbol}
+    71 { startSymbol (resources/71.eps) run endSymbol}
+    73 { startSymbol (resources/73.eps) run endSymbol}
+    79 { startSymbol (resources/79.eps) run endSymbol}
+    83 { startSymbol (resources/83.eps) run endSymbol}
+    89 { startSymbol (resources/89.eps) run endSymbol}
+    97 { startSymbol (resources/97.eps) run endSymbol}
 >> def
+
+/realshowpage {showpage} bind def
+/showpage {} def % this is a hack to prevent GhostScript from starting a
+% new page after every execution of run. Also, the included eps files
+% contain showpage operators that should be ignored.
+
+/startSymbol
+{
+    gsave
+    currentpoint translate 
+    0.4 0.4 scale
+    -24 -24 translate
+} def
+
+
+/endSymbol
+{
+    grestore
+} def
 
 /primeFactors {
   /number exch def
