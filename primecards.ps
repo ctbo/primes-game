@@ -21,7 +21,7 @@ false % set to true to produce individual pages for each card face
     6  [23 5 29 31 3 37 61 7 67]
     7  [11 5 13 71 73 79 17 7 19]
     8  [23 5 29 41 43 47 83 7 89]
-    9  [11 5 13 31 97 37 17 7 19 2 2 3]
+    9  [11 5 13 31 97 37 17 [2 2] 7 [2 3] 19 [2 2 3]]
     0  [3 2 3 3 2 3 2 2 2]
 >> def
 
@@ -91,6 +91,8 @@ false % set to true to produce individual pages for each card face
 
 /xoffset pageWidth xstep xmax 1 add mul sub 2 div def
 /yoffset pageHeight ystep ymax 1 add mul sub 2 div def
+
+/stackSep 0.11 xstep mul def % vertical distance for stacked symbols
 
 /fontCardNo
 {
@@ -250,8 +252,19 @@ false % set to true to produce individual pages for each card face
     grestore
 } def
 
+/drawSymbolStack
+{ % expecting array of symbols on the stack
+    gsave
+    { % forall
+        0 0 moveto
+        primeProcedures exch get exec
+        0 stackSep neg translate
+    } forall
+    grestore
+} def
+
 /drawCardFront
-{ % expecting prime and cardno on the stack
+{ % expecting symbol[-array] and cardno on the stack
     0.1 xstep mul 0.9 ystep mul moveto
     0 setgray
     dup drawCardNo
@@ -260,26 +273,36 @@ false % set to true to produce individual pages for each card face
     0 setgray
     flippedCardNo
 
-    primeProcedures exch get
+    dup type /arraytype ne
+    { % if
+        [ exch ] % turn into singleton array
+    } if
 
-    /startSymbol { startSymbolSmall } def
     
-    0.1 xstep mul 0.78 ystep mul moveto
-    dup exec
+    /startSymbol { startSymbolSmall } def
 
-    0.9 xstep mul 0.22 ystep mul moveto
     gsave
-    180 rotate
-    dup exec
+    0.1 xstep mul 0.78 ystep mul translate
+    dup drawSymbolStack
     grestore
 
-    /startSymbol { startSymbolLarge } def
-    0.5 xstep mul 0.5 ystep mul moveto
-    exec
+    gsave
+    0.9 xstep mul 0.22 ystep mul translate
+    180 rotate
+    dup drawSymbolStack
+    grestore
+
+    % /startSymbol { startSymbolLarge } def
+    gsave
+    0.5 xstep mul 0.5 ystep mul translate
+    3.2 3.2 scale
+    dup length 1 sub stackSep mul 2 div 0 exch translate
+    drawSymbolStack
+    grestore
 } def
 
 /drawCardBack
-{ % expecting primes and cardno on the stack
+{ % expecting symbols and cardno on the stack
     0.1 xstep mul 0.9 ystep mul moveto
     1 setgray
     dup drawCardNo
@@ -296,23 +319,20 @@ false % set to true to produce individual pages for each card face
 
     /alpha 0 def
     /radius 0.3 xstep mul def
-    % primes array is still on top of stack
+    % symbols array is still on top of stack
     { % forall
-        dup 3 eq
-        { % ifelses
+        dup type /arraytype ne
+        { % if
+            [ exch ] % make it into a singleton array
+        } if
+        dup length 1 sub stackSep mul 2 div radius exch sub /r exch def
+        { % forall
             0.5 xstep mul 0.5 ystep mul moveto
-            alpha cos 0.25 xstep mul mul alpha sin 0.25 xstep mul mul rmoveto
-            dup
+            alpha cos r mul alpha sin r mul rmoveto
             primeProcedures exch get exec
-            0.5 xstep mul 0.5 ystep mul moveto
-            alpha cos 0.35 xstep mul mul alpha sin 0.35 xstep mul mul rmoveto
-            primeProcedures exch get exec
-        }
-        {
-            0.5 xstep mul 0.5 ystep mul moveto
-            alpha cos radius mul alpha sin radius mul rmoveto
-            primeProcedures exch get exec
-        } ifelse
+            /r r stackSep add def
+        } forall
+
         /alpha alpha delta add def
     } forall
 } def
