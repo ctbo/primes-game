@@ -21,7 +21,7 @@ false % set to true to produce individual pages for each card face
     6  [23 5 29 31 3 37 61 7 67]
     7  [11 5 13 71 73 79 17 7 19]
     8  [23 5 29 41 43 47 83 7 89]
-    9  [11 5 13 31 97 37 17 7 19]
+    9  [11 5 13 31 97 37 17 7 19 2 2 3]
     0  [3 2 3 3 2 3 2 2 2]
 >> def
 
@@ -290,23 +290,18 @@ false % set to true to produce individual pages for each card face
     
     % primes array is on top of stack
     dup length
-    dup sqrt cvi dup /symbols-per-row exch def
-    div ceiling cvi /nrows exch def
-    /symbol-spacing 0.17 xstep mul def
-    /symbol-x-offset xstep symbols-per-row 1 sub symbol-spacing mul sub 2 div def
-    /symbol-y-offset ystep nrows 1 sub symbol-spacing mul sub 2 div def
-
+    360 exch div /delta exch def
+    
     /startSymbol { startSymbolSmall } def
 
-    /j 0 def
+    /alpha 0 def
+    /radius 0.3 xstep mul def
     % primes array is still on top of stack
     { % forall
-        j symbols-per-row mod symbol-spacing mul symbol-x-offset add 
-        nrows j symbols-per-row idiv sub 1 sub
-        symbol-spacing mul symbol-y-offset add
-        moveto
+        0.5 xstep mul 0.5 ystep mul moveto
+        alpha cos radius mul alpha sin radius mul rmoveto
         primeProcedures exch get exec
-        /j j 1 add def
+        /alpha alpha delta add def
     } forall
 } def
 
