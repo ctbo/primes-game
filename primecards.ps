@@ -298,9 +298,21 @@ false % set to true to produce individual pages for each card face
     /radius 0.3 xstep mul def
     % primes array is still on top of stack
     { % forall
-        0.5 xstep mul 0.5 ystep mul moveto
-        alpha cos radius mul alpha sin radius mul rmoveto
-        primeProcedures exch get exec
+        dup 3 eq
+        { % ifelses
+            0.5 xstep mul 0.5 ystep mul moveto
+            alpha cos 0.25 xstep mul mul alpha sin 0.25 xstep mul mul rmoveto
+            dup
+            primeProcedures exch get exec
+            0.5 xstep mul 0.5 ystep mul moveto
+            alpha cos 0.35 xstep mul mul alpha sin 0.35 xstep mul mul rmoveto
+            primeProcedures exch get exec
+        }
+        {
+            0.5 xstep mul 0.5 ystep mul moveto
+            alpha cos radius mul alpha sin radius mul rmoveto
+            primeProcedures exch get exec
+        } ifelse
         /alpha alpha delta add def
     } forall
 } def
