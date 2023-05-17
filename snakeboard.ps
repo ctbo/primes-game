@@ -147,7 +147,7 @@
 % /ZapfDingbats findfont 10 scalefont setfont
 /numberFont
 {
-    /Helvetica findfont 10 scalefont setfont
+    /NewCenturySchlbk-Roman findfont 44 scalefont setfont
 } def
 
 xstep 0 moveto xstep 9 mul 0 rlineto 0 ystep 10 mul rlineto xstep -9 mul 0 rlineto closepath
@@ -233,45 +233,51 @@ xstep 10 ystep mul cap
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % fill all the squares
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+/symbolSpacing xstep 0.3 mul def
+
+/symbolRow
+{ % draw an array of symbols in a row
+    dup length 1 sub symbolSpacing mul -2 div 0 rmoveto
+    { % forall
+        primeProcedures exch get exec
+        symbolSpacing 0 rmoveto
+    } forall
+} def
+
+
 1 1 99
 { % for
     dup dup 2 string cvs exch
     nToLLCorner moveto
 
     gsave
-    0.5 xstep mul 12 rmoveto
-    0 setgray numberFont showCentered
+    0.5 xstep mul 0.7 ystep mul rmoveto
+    0.8 setgray numberFont showCentered
     grestore
-
-    0.5 xstep mul 0.5 ystep mul rmoveto
 
     primeFactors /pfs exch def
     pfs length /l exch def
-    l 0 ne
-    { % if
-        l 1 eq
+    l 3 le
+    { % ifelse
+        [] pfs
+    }
+    { % else
+        l 4 eq
         { % ifelse
-            pfs 0 get
-            primeProcedures exch get exec
+            pfs 2 2 getinterval pfs 0 2 getinterval
         }
-        { % .. else
-            gsave
-            0.5 setlinewidth 0.8 setgray
-            currentpoint newpath sRadius 0 360 arc
-            stroke
-            grestore
-
-            360 l div /alpha exch def
-            0 1 l 1 sub
-            { % for
-                gsave
-                dup
-                dup alpha mul cos sRadius mul exch alpha mul sin sRadius mul exch rmoveto
-                pfs exch get
-                primeProcedures exch get exec
-                grestore
-            } for
+        { % else
+            pfs 3 l 3 sub getinterval pfs 0 3 getinterval
         } ifelse
-    } if
+    } ifelse
+
+    0.5 xstep mul 16 rmoveto
+    gsave
+    symbolRow
+    grestore
+    0 20 rmoveto
+    symbolRow
 } for
 
