@@ -249,12 +249,14 @@ xstep 10 ystep mul cap
 
 1 1 99
 { % for
+    dup 125 div 0.8 1 sethsbcolor
+    
     dup dup 2 string cvs exch
     nToLLCorner moveto
 
     gsave
     0.5 xstep mul 0.7 ystep mul rmoveto
-    0.7 setgray numberFont showCentered
+    numberFont showCentered
     grestore
 
     primeFactors /pfs exch def
