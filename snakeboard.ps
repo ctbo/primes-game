@@ -153,20 +153,7 @@
 xstep 0 moveto xstep 9 mul 0 rlineto 0 ystep 10 mul rlineto xstep -9 mul 0 rlineto closepath
 1 setgray fill
 
-0 setgray
-0.5 setlinewidth
-% draw vertical grid lines
-1 1 10
-{ % for x
-    xstep mul 0 moveto 0 10 ystep mul rlineto stroke
-} for
-
 3 setlinewidth
-% draw horizontal grid lines
-0 1 10
-{ % for y
-    ystep mul xstep exch moveto 9 xstep mul 0 rlineto stroke
-} for
 
 20 20 80
 { % for n
@@ -216,7 +203,7 @@ xstep ystep cap
 xstep 10 ystep mul cap
 
 0 setgray
-1 setlinewidth
+0.7 setlinewidth
 % draw vertical grid lines
 1 1 10
 { % for x
@@ -261,25 +248,36 @@ xstep 10 ystep mul cap
 
     primeFactors /pfs exch def
     pfs length /l exch def
-    l 3 le
+    l 1 eq
     { % ifelse
-        [] pfs
+        0.5 xstep mul 26 rmoveto
+        gsave
+        2 2 scale
+        pfs 0 get primeProcedures exch get exec
+        grestore
     }
     { % else
-        l 4 eq
+        l 3 le
         { % ifelse
-            pfs 2 2 getinterval pfs 0 2 getinterval
+            [] pfs
         }
         { % else
-            pfs 3 l 3 sub getinterval pfs 0 3 getinterval
+            l 4 eq
+            { % ifelse
+                pfs 2 2 getinterval pfs 0 2 getinterval
+            }
+            { % else
+                pfs 3 l 3 sub getinterval pfs 0 3 getinterval
+            } ifelse
         } ifelse
-    } ifelse
 
-    0.5 xstep mul 16 rmoveto
-    gsave
-    symbolRow
-    grestore
-    0 20 rmoveto
-    symbolRow
+        0.5 xstep mul 16 rmoveto
+        gsave
+        symbolRow
+        grestore
+        0 20 rmoveto
+        symbolRow
+    } ifelse
+    
 } for
 
