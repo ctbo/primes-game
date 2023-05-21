@@ -259,7 +259,8 @@ xstep 10 ystep mul cap
     { % else
         l 3 le
         { % ifelse
-            [] pfs
+            0.5 xstep mul 26 rmoveto
+            pfs symbolRow
         }
         { % else
             l 4 eq
@@ -269,14 +270,13 @@ xstep 10 ystep mul cap
             { % else
                 pfs 3 l 3 sub getinterval pfs 0 3 getinterval
             } ifelse
+            0.5 xstep mul 16 rmoveto
+            gsave
+            symbolRow
+            grestore
+            0 20 rmoveto
+            symbolRow
         } ifelse
-
-        0.5 xstep mul 16 rmoveto
-        gsave
-        symbolRow
-        grestore
-        0 20 rmoveto
-        symbolRow
     } ifelse
     
 } for
