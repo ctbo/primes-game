@@ -11,20 +11,20 @@
 false % set to true to produce individual pages for each card face
 
 /cardSymbols
-<<  % each line produces cards with the given number, one for each 
+[   % each line produces cards with the given number, one for each 
     % element of the array
     % an element can be a single prime or an array of up to 3 primes
     % (more won't crash, but look bad)
-    1  [2 3 [2 2 2] 5 [2 2] 7 11 13 [2 3] 17 [3 3] 19]
-    2  [2 3 [2 2 2] 5 [2 2] 7 23 29 [2 3] 2 [3 3] 5]
-    3  [2 3 5 7 11 13 17 19 31 37 3  5]
-    4  [2 3 5 7 23 29 41 43 47 [2 2] 2 5]
-    5  [2 3 5 7 11 13 17 19 53 59 3  5]
-    6  [2 3 5 7 23 29 31 37 61 [2 3] 67 2]
-    7  [2 3 5 7 11 13 17 19 71 73 79 7]
-    8  [2 3 5 7 23 29 41 43 47 [2 2 2] 83 89]
-    9  [2 3 5 7 11 13 17 19 31 [3 3] 37 97]
->> def
+    [ 1  [2 3 [2 2 2] 5 [2 2] 7 11 13 [2 3] 17 [3 3] 19] ]
+    [ 2  [2 3 [2 2 2] 5 [2 2] 7 23 29 [2 3] 2 [3 3] 5] ]
+    [ 3  [2 3 5 7 11 13 17 19 31 37 3  5] ]
+    [ 4  [2 3 5 7 23 29 41 43 47 [2 2] 2 5] ]
+    [ 5  [2 3 5 7 11 13 17 19 53 59 3  5] ]
+    [ 6  [2 3 5 7 23 29 31 37 61 [2 3] 67 2] ]
+    [ 7  [2 3 5 7 11 13 17 19 71 73 79 7] ]
+    [ 8  [2 3 5 7 23 29 41 43 47 [2 2 2] 83 89] ]
+    [ 9  [2 3 5 7 11 13 17 19 31 [3 3] 37 97] ]
+] def
 
 % procedures to render a symbol for each prime at the current location
 /symbolProcedures
@@ -358,6 +358,7 @@ false % set to true to produce individual pages for each card face
 
 cardSymbols
 { % forall
+    aload pop
     /symbols exch def
     /cardno exch def
 
