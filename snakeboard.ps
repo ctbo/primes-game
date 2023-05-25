@@ -5,7 +5,7 @@
 %%Pages: 1
 %%EndComments
 
-<< /PageSize [842 1190] >> setpagedevice
+false % set to true to produce individual board squares for game GUI
 
 % Calculate the midpoint of the bounding box of a string
 /stringMidpoint {
@@ -116,113 +116,16 @@
 } def
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% start drawing
+% procedures for drawing a square
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% recall BoundingBox: 0 0 842 1190
-0 0 moveto 842 0 lineto 842 1190 lineto 0 1190 lineto closepath 0.7 setgray fill
+/symbolSpacing { xstep 0.3 mul } def
 
-% leave 20pt on each edge, so the board will be 802 x 1150 pt
-20 20 translate
-
-/xstep 802 11 div def
-/ystep 1150 10 div def
-
-/sRadius xstep 0.3 mul def
-
-% lower left corner of square number n
-/nToLLCorner
-{
-    /n exch def
-    n 1 sub 10 mod
-    n 1 sub 10 idiv 2 mod 0 eq {1 add} { 9 exch sub } ifelse
-    xstep mul
-    n 10 idiv
-    n 10 mod 0 eq { 0.5 sub } if
-    ystep mul
-} def
-
-% /ZapfDingbats findfont 10 scalefont setfont
 /numberFont
 {
-    /NewCenturySchlbk-Roman findfont 44 scalefont setfont
+    /NewCenturySchlbk-Roman findfont 42 scalefont setfont
 } def
-
-xstep 0 moveto xstep 9 mul 0 rlineto 0 ystep 10 mul rlineto xstep -9 mul 0 rlineto closepath
-1 setgray fill
-
-3 setlinewidth
-
-20 20 80
-{ % for n
-    nToLLCorner
-    exch xstep add exch ystep 1.5 mul add moveto
-    xstep -0.5 mul 0 xstep neg ystep -0.2 mul xstep neg ystep -0.5 mul rcurveto
-    0 ystep neg rlineto
-    0 ystep -0.3 mul xstep 0.5 mul ystep -0.5 mul xstep ystep -0.5 mul rcurveto
-    gsave
-    closepath
-    1 setgray fill
-    grestore
-    0 setgray
-    stroke
-    
-} for
-
-10 20 90
-{ % for n
-    nToLLCorner
-    ystep -0.5 mul add moveto
-    xstep 0.5 mul 0 xstep ystep 0.2 mul xstep ystep 0.5 mul rcurveto
-    0 ystep rlineto
-    0 ystep 0.3 mul xstep -0.5 mul ystep 0.5 mul xstep neg ystep 0.5 mul rcurveto
-    gsave
-    closepath
-    1 setgray fill
-    grestore
-    0 setgray
-    stroke
-} for
-
-/cap
-{
-    moveto
-    xstep -0.5 mul 0 xstep neg ystep -0.2 mul xstep neg ystep -0.5 mul rcurveto
-    0 ystep -0.3 mul xstep 0.5 mul ystep -0.5 mul xstep ystep -0.5 mul rcurveto
-    gsave
-    closepath
-    1 setgray fill
-    grestore
-    0 setgray
-    stroke
-} def
-
-xstep ystep cap
-xstep 10 ystep mul cap
-
-0 setgray
-0.7 setlinewidth
-% draw vertical grid lines
-1 1 10
-{ % for x
-    xstep mul 0 moveto 0 10 ystep mul rlineto stroke
-} for
-
-3 setlinewidth
-% draw horizontal grid lines
-0 1 10
-{ % for y
-    ystep mul xstep exch moveto 9 xstep mul 0 rlineto stroke
-} for
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% fill all the squares
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-/symbolSpacing xstep 0.3 mul def
 
 /symbolRow
 { % draw an array of symbols in a row
@@ -233,16 +136,24 @@ xstep 10 ystep mul cap
     } forall
 } def
 
+/setColorN
+{
+    100 exch sub
+    150 div 0.5 1 sethsbcolor
+} def
 
-1 1 99
-{ % for
-    dup 125 div 0.8 1 sethsbcolor
-    
-    dup dup 2 string cvs exch
-    nToLLCorner moveto
+/drawSquare
+{ % expecting the number on the stack and current point in the ll corner
+    dup setColorN
+    gsave
+    xstep 0 rlineto 0 ystep rlineto xstep neg 0 rlineto closepath fill
+    grestore
 
     gsave
     0.5 xstep mul 0.7 ystep mul rmoveto
+    gsave 1 setgray currentpoint 0.40 xstep mul 0 360 arc fill grestore
+    dup 2 string cvs
+    0.8 setgray
     numberFont showCentered
     grestore
 
@@ -284,6 +195,137 @@ xstep 10 ystep mul cap
             symbolRow
         } ifelse
     } ifelse
-    
-} for
+} def
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% start drawing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{ % if we are producing individual squares for GUI
+
+    /xstep 802 11 div def
+    /ystep 1150 10 div def
+
+    << /PageSize [xstep ystep] >> setpagedevice
+
+    1 1 99
+    { % for
+        0 0 moveto
+        drawSquare
+        realshowpage
+    } for
+}
+{ % else produce the board
+    << /PageSize [842 1190] >> setpagedevice
+
+    0 0 moveto 842 0 lineto 842 1190 lineto 0 1190 lineto closepath 0.7 setgray fill
+
+    % leave 20pt on each edge, so the board will be 802 x 1150 pt
+    20 20 translate
+
+    /xstep 802 11 div def
+    /ystep 1150 10 div def
+
+    /sRadius xstep 0.3 mul def
+
+    % lower left corner of square number n
+    /nToLLCorner
+    {
+        /n exch def
+        n 1 sub 10 mod
+        n 1 sub 10 idiv 2 mod 0 eq {1 add} { 9 exch sub } ifelse
+        xstep mul
+        n 10 idiv
+        n 10 mod 0 eq { 0.5 sub } if
+        ystep mul
+    } def
+
+    xstep 0 moveto xstep 9 mul 0 rlineto 0 ystep 10 mul rlineto xstep -9 mul 0 rlineto closepath
+    1 setgray fill
+
+    /evenCurvePath
+    {
+        nToLLCorner
+        exch xstep add exch ystep 1.5 mul add moveto
+        xstep -0.5 mul 0 xstep neg ystep -0.2 mul xstep neg ystep -0.5 mul rcurveto
+        0 ystep neg rlineto
+        0 ystep -0.3 mul xstep 0.5 mul ystep -0.5 mul xstep ystep -0.5 mul rcurveto
+    } def
+    
+    /oddCurvePath
+    {
+        nToLLCorner
+        ystep -0.5 mul add moveto
+        xstep 0.5 mul 0 xstep ystep 0.2 mul xstep ystep 0.5 mul rcurveto
+        0 ystep rlineto
+        0 ystep 0.3 mul xstep -0.5 mul ystep 0.5 mul xstep neg ystep 0.5 mul rcurveto
+    } def
+    
+    20 20 80
+    { % for n
+        dup evenCurvePath closepath
+        setColorN fill
+    } for
+
+    10 20 90
+    { % for n
+        dup oddCurvePath closepath
+        setColorN fill
+    } for
+
+    /cap
+    {
+        moveto
+        xstep -0.5 mul 0 xstep neg ystep -0.2 mul xstep neg ystep -0.5 mul rcurveto
+        0 ystep -0.3 mul xstep 0.5 mul ystep -0.5 mul xstep ystep -0.5 mul rcurveto
+        gsave
+        closepath
+        setColorN fill
+        grestore
+        0 setgray 3 setlinewidth
+        stroke
+    } def
+
+    0 xstep ystep cap
+    100 xstep 10 ystep mul cap
+
+    
+    1 1 99
+    { % for
+        dup nToLLCorner moveto
+        drawSquare
+    } for
+
+    0 setgray
+    3 setlinewidth
+    20 20 80
+    { % for n
+        evenCurvePath
+        stroke
+        
+    } for
+
+    10 20 90
+    { % for n
+        oddCurvePath
+        stroke
+    } for
+
+    0 setgray
+    0.7 setlinewidth
+    % draw vertical grid lines
+    1 1 10
+    { % for x
+        xstep mul 0 moveto 0 10 ystep mul rlineto stroke
+    } for
+
+    3 setlinewidth
+    % draw horizontal grid lines
+    0 1 10
+    { % for y
+        ystep mul xstep exch moveto 9 xstep mul 0 rlineto stroke
+    } for
+
+
+} ifelse
