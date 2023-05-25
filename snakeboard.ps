@@ -19,8 +19,8 @@ false % set to true to produce individual board squares for game GUI
     /urx exch def
     /lly exch def
     /llx exch def
-    urx llx sub 2 div
-    ury lly sub 2 div
+    urx llx sub 2 div llx add
+    ury lly sub 2 div lly add
     grestore
 } def
 
@@ -139,7 +139,7 @@ false % set to true to produce individual board squares for game GUI
 /setColorN
 {
     100 exch sub
-    150 div 0.5 1 sethsbcolor
+    150 div 0.4 1 sethsbcolor
 } def
 
 /drawSquare
@@ -153,7 +153,7 @@ false % set to true to produce individual board squares for game GUI
     0.5 xstep mul 0.7 ystep mul rmoveto
     gsave 1 setgray currentpoint 0.40 xstep mul 0 360 arc fill grestore
     dup 2 string cvs
-    0.8 setgray
+    0.7 setgray
     numberFont showCentered
     grestore
 
