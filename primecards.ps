@@ -112,8 +112,8 @@ false % set to true to produce individual pages for each card face
     /urx exch def
     /lly exch def
     /llx exch def
-    urx llx sub 2 div
-    ury lly sub 2 div
+    urx llx sub 2 div llx add
+    ury lly sub 2 div lly add
     grestore
 } def
 
