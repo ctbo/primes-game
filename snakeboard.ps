@@ -139,7 +139,13 @@ false % set to true to produce individual board squares for game GUI
 /setColorN
 {
     100 exch sub
-    150 div 0.4 1 sethsbcolor
+    150 div 0.6 1 sethsbcolor
+} def
+
+/setLightColorN
+{
+    100 exch sub
+    150 div 0.2 1 sethsbcolor
 } def
 
 /drawSquare
@@ -151,9 +157,9 @@ false % set to true to produce individual board squares for game GUI
 
     gsave
     0.5 xstep mul 0.7 ystep mul rmoveto
-    gsave 1 setgray currentpoint 0.40 xstep mul 0 360 arc fill grestore
+    gsave 1 setgray currentpoint newpath 0.40 xstep mul 0 360 arc dup setLightColorN fill grestore
     dup 2 string cvs
-    0.7 setgray
+    0 setgray
     numberFont showCentered
     grestore
 
