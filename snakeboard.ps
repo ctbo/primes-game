@@ -287,14 +287,16 @@ false % set to true to produce individual board squares for game GUI
         0 ystep -0.3 mul xstep 0.5 mul ystep -0.5 mul xstep ystep -0.5 mul rcurveto
         gsave
         closepath
-        setColorN fill
+        setLightColorN fill
         grestore
         0 setgray 3 setlinewidth
         stroke
     } def
 
     0 xstep ystep cap
+    xstep 0.5 mul ystep 0.5 mul moveto 2 0 rmoveto 0 setgray numberFont (0) showCentered
     100 xstep 10 ystep mul cap
+    xstep 0.5 mul ystep 9.5 mul moveto 2 0 rmoveto 0 setgray numberFont (100) showCentered
 
     
     1 1 99
