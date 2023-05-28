@@ -44,22 +44,22 @@ false % set to true to produce individual board squares for game GUI
     13 { startSymbol (resources/13.eps) run endSymbol}
     17 { startSymbol (resources/17.eps) run endSymbol}
     19 { startSymbol (resources/19.eps) run endSymbol}
-    23 { startSymbol (resources/23.eps) run endSymbol}
-    29 { startSymbol (resources/29.eps) run endSymbol}
+    23 { startFlippedSymbol (resources/23.eps) run endSymbol}
+    29 { startFlippedSymbol (resources/29.eps) run endSymbol}
     31 { startSymbol (resources/31.eps) run endSymbol}
     37 { startSymbol (resources/37.eps) run endSymbol}
-    41 { startSymbol (resources/41.eps) run endSymbol}
-    43 { startSymbol (resources/43.eps) run endSymbol}
-    47 { startSymbol (resources/47.eps) run endSymbol}
+    41 { startFlippedSymbol (resources/41.eps) run endSymbol}
+    43 { startFlippedSymbol (resources/43.eps) run endSymbol}
+    47 { startFlippedSymbol (resources/47.eps) run endSymbol}
     53 { startSymbol (resources/53.eps) run endSymbol}
     59 { startSymbol (resources/59.eps) run endSymbol}
-    61 { startSymbol (resources/61.eps) run endSymbol}
-    67 { startSymbol (resources/67.eps) run endSymbol}
+    61 { startFlippedSymbol (resources/61.eps) run endSymbol}
+    67 { startFlippedSymbol (resources/67.eps) run endSymbol}
     71 { startSymbol (resources/71.eps) run endSymbol}
     73 { startSymbol (resources/73.eps) run endSymbol}
     79 { startSymbol (resources/79.eps) run endSymbol}
-    83 { startSymbol (resources/83.eps) run endSymbol}
-    89 { startSymbol (resources/89.eps) run endSymbol}
+    83 { startFlippedSymbol (resources/83.eps) run endSymbol}
+    89 { startFlippedSymbol (resources/89.eps) run endSymbol}
     97 { startSymbol (resources/97.eps) run endSymbol}
 >> def
 
@@ -73,6 +73,14 @@ false % set to true to produce individual board squares for game GUI
     gsave
     currentpoint translate 
     0.4 0.4 scale
+    -24 -24 translate
+} def
+
+/startFlippedSymbol
+{
+    gsave
+    currentpoint translate 
+    -0.4 0.4 scale
     -24 -24 translate
 } def
 
