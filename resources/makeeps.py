@@ -1,6 +1,7 @@
 import subprocess
 
 symbols = {
+    0: "running-shoe",
     1: "ghost",
     2: "red-apple",
     3: "blueberries",

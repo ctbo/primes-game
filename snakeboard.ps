@@ -30,18 +30,6 @@ false % set to true to produce individual board squares for game GUI
     show
 } def
 
-/paintSymbol
-{
-    % fill white circle for the symbol
-    gsave
-    currentpoint newpath 10 0 360 arc
-    gsave 1 setgray fill grestore
-    grestore
-
-    7 1 roll setrgbcolor pop pop pop
-    fontDingbats showCentered
-} def
-
 
 % procedures to render a symbol for each prime at the current location
 /primeProcedures
@@ -301,7 +289,7 @@ false % set to true to produce individual board squares for game GUI
     } def
 
     0 xstep ystep cap
-    xstep 0.5 mul ystep 0.5 mul moveto 2 0 rmoveto 0 setgray numberFont (0) showCentered
+    gsave xstep 0.5 mul ystep 0.5 mul moveto 2 2 scale startSymbol (resources/0.eps) run endSymbol grestore
     100 xstep 10 ystep mul cap
     0 setgray numberFont
     xstep 0.4 mul ystep 9.7 mul moveto (1) showCentered
