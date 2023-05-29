@@ -246,7 +246,17 @@ false % set to true to produce individual board squares for game GUI
     } def
 
     0 xstep ystep cap
-    gsave xstep 0.5 mul ystep 0.5 mul moveto 2 2 scale symbolProcedures 0 get exec grestore
+
+    gsave
+    1 setlinejoin
+    xstep 0.4 mul ystep 0.5 mul moveto
+    30 0 rmoveto
+    -30 15 rlineto
+    0 -30 rlineto
+    closepath
+    3.8 setlinewidth 0 setgray stroke
+    grestore
+    
     100 xstep 10 ystep mul cap
     0 setgray numberFont
     xstep 0.4 mul ystep 9.7 mul moveto (1) showCentered
