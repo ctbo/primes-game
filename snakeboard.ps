@@ -7,6 +7,13 @@
 
 false % set to true to produce individual board squares for game GUI
 
+/realshowpage {showpage} bind def
+/showpage {} def % this is a hack to prevent GhostScript from starting a
+% new page after every execution of run. Also, the included eps files
+% contain showpage operators that should be ignored.
+
+(common.ps) run
+
 % Calculate the midpoint of the bounding box of a string
 /stringMidpoint {
     gsave
@@ -31,64 +38,6 @@ false % set to true to produce individual board squares for game GUI
 } def
 
 
-% procedures to render a symbol for each prime at the current location
-/primeProcedures
-<<  % each procedure can be replaced by any code to draw a symbol
-    % at current point
-    1 { startSymbol (resources/1.eps) run endSymbol}
-    2 { startSymbol (resources/2.eps) run endSymbol}
-    3 { startSymbol (resources/3.eps) run endSymbol}
-    5 { startSymbol (resources/5.eps) run endSymbol}
-    7 { startSymbol (resources/7.eps) run endSymbol}
-    11 { startSymbol (resources/11.eps) run endSymbol}
-    13 { startSymbol (resources/13.eps) run endSymbol}
-    17 { startSymbol (resources/17.eps) run endSymbol}
-    19 { startSymbol (resources/19.eps) run endSymbol}
-    23 { startFlippedSymbol (resources/23.eps) run endSymbol}
-    29 { startFlippedSymbol (resources/29.eps) run endSymbol}
-    31 { startSymbol (resources/31.eps) run endSymbol}
-    37 { startSymbol (resources/37.eps) run endSymbol}
-    41 { startFlippedSymbol (resources/41.eps) run endSymbol}
-    43 { startFlippedSymbol (resources/43.eps) run endSymbol}
-    47 { startFlippedSymbol (resources/47.eps) run endSymbol}
-    53 { startSymbol (resources/53.eps) run endSymbol}
-    59 { startSymbol (resources/59.eps) run endSymbol}
-    61 { startFlippedSymbol (resources/61.eps) run endSymbol}
-    67 { startFlippedSymbol (resources/67.eps) run endSymbol}
-    71 { startSymbol (resources/71.eps) run endSymbol}
-    73 { startSymbol (resources/73.eps) run endSymbol}
-    79 { startSymbol (resources/79.eps) run endSymbol}
-    83 { startFlippedSymbol (resources/83.eps) run endSymbol}
-    89 { startFlippedSymbol (resources/89.eps) run endSymbol}
-    97 { startSymbol (resources/97.eps) run endSymbol}
->> def
-
-/realshowpage {showpage} bind def
-/showpage {} def % this is a hack to prevent GhostScript from starting a
-% new page after every execution of run. Also, the included eps files
-% contain showpage operators that should be ignored.
-
-/startSymbol
-{
-    gsave
-    currentpoint translate 
-    0.4 0.4 scale
-    -24 -24 translate
-} def
-
-/startFlippedSymbol
-{
-    gsave
-    currentpoint translate 
-    -0.4 0.4 scale
-    -24 -24 translate
-} def
-
-
-/endSymbol
-{
-    grestore
-} def
 
 /primeFactors {
   /number exch def
@@ -128,7 +77,7 @@ false % set to true to produce individual board squares for game GUI
 { % draw an array of symbols in a row
     dup length 1 sub symbolSpacing mul -2 div 0 rmoveto
     { % forall
-        primeProcedures exch get exec
+        symbolProcedures exch get exec
         symbolSpacing 0 rmoveto
     } forall
 } def
@@ -173,7 +122,7 @@ false % set to true to produce individual board squares for game GUI
         0.5 xstep mul 26 rmoveto
         gsave
         2 2 scale
-        pfs 0 get primeProcedures exch get exec
+        pfs 0 get symbolProcedures exch get exec
         grestore
     }
     { % else
@@ -297,7 +246,7 @@ false % set to true to produce individual board squares for game GUI
     } def
 
     0 xstep ystep cap
-    gsave xstep 0.5 mul ystep 0.5 mul moveto 2 2 scale startSymbol (resources/0.eps) run endSymbol grestore
+    gsave xstep 0.5 mul ystep 0.5 mul moveto 2 2 scale symbolProcedures 0 get exec grestore
     100 xstep 10 ystep mul cap
     0 setgray numberFont
     xstep 0.4 mul ystep 9.7 mul moveto (1) showCentered

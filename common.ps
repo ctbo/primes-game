@@ -1,0 +1,84 @@
+%!PS
+%%Creator: Harald Boegeholz
+%%Title: common include for prime number game
+%%EndComments
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The following specifies the set of cards
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+/cardSymbols
+[   % each line produces cards with the given number, one for each 
+    % element of the array
+    % an element can be a single prime or an array of up to 3 primes
+    % (more won't crash, but look bad)
+    [ 1  [2 3 [2 2 2] 5 [2 2] 7 11 13 [2 3] 17 [3 3] 19] ]
+    [ 2  [2 3 [2 2 2] 5 [2 2] 7 23 29 [2 3] 2 [3 3] 5] ]
+    [ 3  [2 3 5 7 11 13 17 19 31 37 3  5] ]
+    [ 4  [2 3 5 7 23 29 41 43 47 [2 2] 2 5] ]
+    [ 5  [2 3 5 7 11 13 17 19 53 59 3  5] ]
+    [ 6  [2 3 5 7 23 29 31 37 61 [2 3] 67 2] ]
+    [ 7  [2 3 5 7 11 13 17 19 71 73 79 7] ]
+    [ 8  [2 3 5 7 23 29 41 43 47 [2 2 2] 83 89] ]
+    [ 9  [2 3 5 7 11 13 17 19 31 [3 3] 37 97] ]
+] def
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% procedures to render a symbol for each prime at the current location
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+/symbolProcedures
+<<  % each procedure can be replaced by any code to draw a symbol
+    % at current point
+    0 { startSymbol (resources/0.eps) run endSymbol} % used for square 0
+    1 { startSymbol (resources/1.eps) run endSymbol} % used for square 1
+    2 { startSymbol (resources/2.eps) run endSymbol}
+    3 { startSymbol (resources/3.eps) run endSymbol}
+    5 { startSymbol (resources/5.eps) run endSymbol}
+    7 { startSymbol (resources/7.eps) run endSymbol}
+    11 { startSymbol (resources/11.eps) run endSymbol}
+    13 { startSymbol (resources/13.eps) run endSymbol}
+    17 { startSymbol (resources/17.eps) run endSymbol}
+    19 { startSymbol (resources/19.eps) run endSymbol}
+    23 { startFlippedSymbol (resources/23.eps) run endSymbol}
+    29 { startFlippedSymbol (resources/29.eps) run endSymbol}
+    31 { startSymbol (resources/31.eps) run endSymbol}
+    37 { startSymbol (resources/37.eps) run endSymbol}
+    41 { startFlippedSymbol (resources/41.eps) run endSymbol}
+    43 { startFlippedSymbol (resources/43.eps) run endSymbol}
+    47 { startFlippedSymbol (resources/47.eps) run endSymbol}
+    53 { startSymbol (resources/53.eps) run endSymbol}
+    59 { startSymbol (resources/59.eps) run endSymbol}
+    61 { startFlippedSymbol (resources/61.eps) run endSymbol}
+    67 { startFlippedSymbol (resources/67.eps) run endSymbol}
+    71 { startSymbol (resources/71.eps) run endSymbol}
+    73 { startSymbol (resources/73.eps) run endSymbol}
+    79 { startSymbol (resources/79.eps) run endSymbol}
+    83 { startFlippedSymbol (resources/83.eps) run endSymbol}
+    89 { startFlippedSymbol (resources/89.eps) run endSymbol}
+    97 { startSymbol (resources/97.eps) run endSymbol}
+>> def
+
+/startSymbol
+{
+    gsave
+    currentpoint translate 
+    0.4 0.4 scale
+    -24 -24 translate
+} def
+
+/startFlippedSymbol
+{
+    gsave
+    currentpoint translate 
+    -0.4 0.4 scale
+    -24 -24 translate
+} def
+
+
+/endSymbol
+{
+    grestore
+} def

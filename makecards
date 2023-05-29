@@ -1,2 +1,2 @@
 #!/bin/sh
-gs --permit-file-read=resources/ -sDEVICE=pdfwrite -sOutputFile=primecards.pdf -dBATCH -dNOPAUSE primecards.ps
+gs --permit-file-read=./ --permit-file-read=resources/ -sDEVICE=pdfwrite -sOutputFile=primecards.pdf -dBATCH -dNOPAUSE primecards.ps
