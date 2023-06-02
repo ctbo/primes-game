@@ -247,11 +247,13 @@ false % set to true to produce individual board squares for game GUI
 
     0 xstep ystep cap
 
+    % draw start symbol
+    % slight imperfections to match Chalkboard font
     gsave
     1 setlinecap
     3.8 setlinewidth 0 setgray
     xstep 0.4 mul ystep 0.5 mul moveto
-    gsave 30 0 rmoveto -30.4 15.25 rlineto stroke grestore
+    gsave 30.4 0.25 rmoveto -30.8 15.5 rlineto stroke grestore
     gsave 0 15 rmoveto 0 -30 rlineto stroke grestore
     gsave 30 0 rmoveto -30.4 -15.6 rlineto stroke grestore
     grestore
