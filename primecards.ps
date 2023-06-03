@@ -4,7 +4,7 @@
 %%Orientation: Portrait
 %%EndComments
 
-false % set to true to produce individual pages for each card face
+true % set to true to produce individual pages for each card face
 
 /realshowpage {showpage} bind def
 /showpage {} def % this is a hack to prevent GhostScript from starting a
@@ -13,13 +13,16 @@ false % set to true to produce individual pages for each card face
 
 (common.ps) run % include definitions of cards and symbols
 
-% playing cards are 2.5 x 3.5 inches
-/xstep 2.5 72 mul def
-/ystep 3.5 72 mul def
+/mm { 25.4 div 72 mul } def
+
+% playing cards are 84 mm x 89 mm (2.5 x 3.5 inches)
+/xstep 64 mm def
+/ystep 89 mm def
 
 { % make card-sized pages with one card face each
-    /pageWidth xstep def
-    /pageHeight ystep def
+    % printing service requires 3 mm bleed on each side
+    /pageWidth xstep 6 mm add def
+    /pageHeight ystep 6 mm add def
     
     << /PageSize [pageWidth pageHeight] >> setpagedevice
 
@@ -112,10 +115,10 @@ false % set to true to produce individual pages for each card face
 {
     setgray
     xoffset yoffset moveto
-    -10 -10 rmoveto
-    xmax 1 add xstep mul 20 add 0 rlineto
-    0 ymax 1 add ystep mul 20 add rlineto
-    xmax 1 add xstep mul 20 add neg 0 rlineto
+    -3 mm -3 mm rmoveto
+    xmax 1 add xstep mul 6 mm add 0 rlineto
+    0 ymax 1 add ystep mul 6 mm add rlineto
+    xmax 1 add xstep mul 6 mm add neg 0 rlineto
     closepath fill
 } def
 
@@ -144,6 +147,7 @@ false % set to true to produce individual pages for each card face
         { % if
             /x 0 def
             /y 0 def
+            % xoffset yoffset moveto xstep 0 rlineto 0 ystep rlineto xstep neg 0 rlineto closepath 0.5 setlinewidth 1 0 0.5 setrgbcolor stroke
             realshowpage
         } if
     } if
@@ -173,6 +177,7 @@ false % set to true to produce individual pages for each card face
         { % if
             /x 0 def
             /y 0 def
+            % xoffset yoffset moveto xstep 0 rlineto 0 ystep rlineto xstep neg 0 rlineto closepath 0.5 setlinewidth 1 0 0.5 setrgbcolor stroke
             realshowpage
         } if
     } if
@@ -213,11 +218,11 @@ false % set to true to produce individual pages for each card face
 
 /drawCardFront
 { % expecting symbol[-array] and cardno on the stack
-    0.1 xstep mul 0.9 ystep mul moveto
+    0.11 xstep mul 0.9 ystep mul moveto
     0 setgray
     dup drawCardNo
 
-    0.9 xstep mul 0.1 ystep mul moveto
+    0.89 xstep mul 0.1 ystep mul moveto
     0 setgray
     flippedCardNo
 
@@ -251,11 +256,11 @@ false % set to true to produce individual pages for each card face
 
 /drawCardBack
 { % expecting symbols and cardno on the stack
-    0.1 xstep mul 0.9 ystep mul moveto
+    0.11 xstep mul 0.9 ystep mul moveto
     1 setgray
     dup drawCardNo
 
-    0.9 xstep mul 0.1 ystep mul moveto
+    0.89 xstep mul 0.1 ystep mul moveto
     1 setgray
     flippedCardNo
     
@@ -288,7 +293,7 @@ false % set to true to produce individual pages for each card face
 /flushDeferredCards
 {
     ]
-    {
+    { % forall
         startCardBack
         aload pop
         drawCardBack
