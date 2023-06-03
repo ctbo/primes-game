@@ -1,16 +1,14 @@
 import subprocess
 
 symbols = {
-    0: "running-shoe",
-    1: "ghost",
     2: "red-apple",
     3: "blueberries",
     5: "tangerine",
-    7: "cucumber",
-    11: "hatching-chick",
-    13: "baby-chick",
-    17: "front-facing-baby-chick",
-    19: "chicken",
+    7: "avocado",
+    11: "baby-chick",
+    13: "pig",
+    17: "ewe",
+    19: "horse",
     23: "octopus",
     29: "crab",
     31: "spouting-whale",
@@ -21,11 +19,11 @@ symbols = {
     53: "elephant",
     59: "zebra",
     61: "camel",
-    67: "two-hump-camel",
+    67: "giraffe",
     71: "cockroach",
     73: "beetle",
     79: "cricket",
-    83: "dragon-face",
+    83: "t-rex",
     89: "sauropod",
     97: "pile-of-poo"
 }
