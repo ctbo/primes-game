@@ -48,9 +48,9 @@ symbols_unicode = {
     59: "1F98F", # rhino. zebra: "1F993",
     61: "1F42A",
     67: "1F992",
-    71: "1FAB3",
-    73: "1FAB2",
-    79: "1F997",
+    71: "1F41E", # lady-beetle. cockroach: "1FAB3",
+    73: "1F41D-bo", # bee. beetle: "1FAB2",
+    79: "1F98B", # butterfly. cricket: "1F997",
     83: "1F996",
     89: "1F995",
     97: "1F4A9"
