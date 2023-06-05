@@ -4,7 +4,12 @@
 %%Orientation: Portrait
 %%EndComments
 
-true % set to true to produce individual pages for each card face
+% This is intended to be executed by GhostScript.
+% The following parameters can be specified on the GhostScript command line:
+% -dNinePerPage  make A4 pages with 9 cards each (default one per page)
+% -dCardGrid     print grid for cutting cards
+% -dCardClip     clip cards with rounded corners and stroke outline
+% -sBleed        bleed added to outside of cards in mm
 
 /realshowpage {showpage} bind def
 /showpage {} def % this is a hack to prevent GhostScript from starting a
@@ -19,17 +24,15 @@ true % set to true to produce individual pages for each card face
 /xstep 64 mm def
 /ystep 89 mm def
 
-{ % make card-sized pages with one card face each
-    % printing service requires 3 mm bleed on each side
-    /pageWidth xstep 6 mm add def
-    /pageHeight ystep 6 mm add def
-    
-    << /PageSize [pageWidth pageHeight] >> setpagedevice
+% radius of rounded corners
+/cornerR 4 mm def
 
-    /xmax 0 def
-    /ymax 0 def
-}
+/bleed /Bleed where { pop Bleed cvr mm } { 3 mm } ifelse def
+
+
+/NinePerPage where
 { % make A4 pages with 9 cards each
+    pop
     /pageWidth 595 def
     /pageHeight 842 def
 
@@ -37,6 +40,16 @@ true % set to true to produce individual pages for each card face
 
     /xmax 2 def
     /ymax 2 def
+}
+{ % make card-sized pages with one card face each
+    % printing service requires some bleed on each side
+    /pageWidth xstep bleed 2 mul add def
+    /pageHeight ystep bleed 2 mul add def
+    
+    << /PageSize [pageWidth pageHeight] >> setpagedevice
+
+    /xmax 0 def
+    /ymax 0 def
 } ifelse
 
 
@@ -95,32 +108,65 @@ true % set to true to produce individual pages for each card face
 } def
 
 
-/grid
+/CardGrid where
+{ % ifelse
+    pop
+    /grid
+    {
+        0 setgray
+        0.5 setlinewidth
+
+        0 1 xmax 1 add
+        {
+            xstep mul xoffset add 0 moveto 0 pageHeight rlineto stroke
+        } for
+
+        0 1 ymax 1 add
+        {
+            ystep mul yoffset add 0 exch moveto pageWidth 0 rlineto stroke
+        } for
+    } def
+}
 {
-    0 setgray
-    0.5 setlinewidth
-
-    0 1 xmax 1 add
-    {
-        xstep mul xoffset add 0 moveto 0 pageHeight rlineto stroke
-    } for
-
-    0 1 ymax 1 add
-    {
-        ystep mul yoffset add 0 exch moveto pageWidth 0 rlineto stroke
-    } for
-} def
+    /grid {} def
+} ifelse
 
 /background
 {
     setgray
-    xoffset yoffset moveto
-    -3 mm -3 mm rmoveto
-    xmax 1 add xstep mul 6 mm add 0 rlineto
-    0 ymax 1 add ystep mul 6 mm add rlineto
-    xmax 1 add xstep mul 6 mm add neg 0 rlineto
+    bleed neg bleed neg moveto
+    xstep bleed 2 mul add 0 rlineto
+    0 ystep bleed 2 mul add rlineto
+    xstep bleed 2 mul add neg 0 rlineto
     closepath fill
 } def
+
+/CardClip where
+{ % ifelse
+    pop
+
+    /clipCard
+    {
+        cornerR cornerR cornerR 180 270 arc
+        xstep cornerR sub 0 lineto
+        xstep cornerR sub cornerR cornerR 270 360 arc
+        xstep ystep cornerR sub lineto
+        xstep cornerR sub ystep cornerR sub cornerR 0 90 arc
+        cornerR ystep lineto
+        cornerR ystep cornerR sub cornerR 90 180 arc
+        closepath
+        clip
+    } def
+
+    /outlineCard
+    {
+        4 setlinewidth 0 0 0 setrgbcolor clippath stroke
+    } def
+}
+{
+    /clipCard {} def
+    /outlineCard {} def
+} ifelse
 
 /startCardFront
 {
@@ -128,11 +174,13 @@ true % set to true to produce individual pages for each card face
     x 0 eq y 0 eq and
     { % if
         grid
-        1 background
         [
     } if
     gsave
     x xstep mul xoffset add ymax y sub ystep mul yoffset add translate
+    clipCard
+    1 background
+    outlineCard
 } def
 
 /endCardFront
@@ -147,7 +195,6 @@ true % set to true to produce individual pages for each card face
         { % if
             /x 0 def
             /y 0 def
-            % xoffset yoffset moveto xstep 0 rlineto 0 ystep rlineto xstep neg 0 rlineto closepath 0.5 setlinewidth 1 0 0.5 setrgbcolor stroke
             realshowpage
         } if
     } if
@@ -159,10 +206,12 @@ true % set to true to produce individual pages for each card face
     x 0 eq y 0 eq and
     { %if
         grid
-        0 background
     } if
     gsave
     xmax x sub xstep mul xoffset add ymax y sub ystep mul yoffset add translate
+    clipCard
+    0 background
+    outlineCard
 } def
 
 /endCardBack
@@ -177,7 +226,6 @@ true % set to true to produce individual pages for each card face
         { % if
             /x 0 def
             /y 0 def
-            % xoffset yoffset moveto xstep 0 rlineto 0 ystep rlineto xstep neg 0 rlineto closepath 0.5 setlinewidth 1 0 0.5 setrgbcolor stroke
             realshowpage
         } if
     } if

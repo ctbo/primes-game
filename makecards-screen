@@ -1,0 +1,2 @@
+#!/bin/sh
+gs --permit-file-read=./ --permit-file-read=resources/ -sDEVICE=pdfwrite -sOutputFile=primecards-screen.pdf -dBATCH -dNOPAUSE -dCardClip -sBleed=0.5 primecards.ps
