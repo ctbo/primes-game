@@ -4,8 +4,11 @@
 
 \documentclass{article}
 
+\usepackage{fontspec}
 \usepackage{graphicx}
 \usepackage{adjustbox}
+
+\setmainfont{HelveticaNeue}
 
 \newcommand{\card}[1]{\adjustbox{valign=m}{\includegraphics[page=#1, width=2cm]{primecards-screen.pdf}}}
 \newcommand{\square}[1]{\adjustbox{valign=m}{\includegraphics[page=#1, width=2cm]{boardsquares.pdf}}}
@@ -29,13 +32,15 @@ Place the meeples on the starting square. If there are
 
 Shuffle the deck and put it onto the drawpile with the black side up. Cut the deck and deal one card to each player.
 
+The players should hold their cards such that only they can see the white (front) side, but the black (back) side should be visible to all opponents. 
+
 \section*{Gameplay}
 
 The players take turns in a clockwise direction. On their turn, a player may \textbf{trip} an opponent by playing any number of their cards white side up so that the symbols exactly match the symbols on the square occupied by the opponent. The opponent meeple(s) are moved back by the sum of the numbers on the cards played. The player may continue tripping opponents as long as they can. After that, the player may \textbf{run} once by playing any number of their cards \textit{with the same number} black side up. A player may choose to pass by neither tripping nor running.
 
 For each opponent meeple tripped and for the run, the player may then move forward one of their own meeples by the sum of the numbers on the cards. Meeples can not be moved beyond 100; if a meeple is too close to 100 and the number is too large, it has to stay in place. You can only reach 100 by playing exactly the right number.
 
-At the end of their turn, the player draws one more card than they played and puts all played cards in the discard pile. When the draw pile runs out, it is not reshuffled; players just stop drawing.
+At the end of their turn, the player draws one more card than they played. This has the effect that in each round, players hold one more card than in the previous round. All played cards are now discarded. Discarded cards are not reused during the game. When the draw pile runs out, players just stop drawing, forcing them to pass eventually.
 
 \section*{Example turn}
 
