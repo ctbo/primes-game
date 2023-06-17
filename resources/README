@@ -1,3 +1,7 @@
-This prototype uses images that are licensed for personal use only and
-not allowed in an open source project. Therefore, they are not
-included here. Unfortunately, the code won't work without them :-(
+This game uses SVG images from the Noto Emoji font from
+
+https://github.com/googlefonts/noto-emoji
+
+The images are under the Apache license, version 2.0. See the file LICENSE.
+
+Modified images are marked with "-bo" at the end of the base name.

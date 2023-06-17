@@ -1,32 +1,5 @@
 import subprocess
 
-symbols = {
-    2: "red-apple",
-    3: "blueberries",
-    5: "tangerine",
-    7: "avocado",
-    11: "baby-chick",
-    13: "pig",
-    17: "ewe",
-    19: "horse",
-    23: "octopus",
-    29: "crab",
-    31: "spouting-whale",
-    37: "tropical-fish",
-    41: "lizard",
-    43: "turtle",
-    47: "snake",
-    53: "elephant",
-    59: "zebra",
-    61: "camel",
-    67: "giraffe",
-    71: "cockroach",
-    73: "beetle",
-    79: "cricket",
-    83: "t-rex",
-    89: "sauropod",
-    97: "pile-of-poo"
-}
 
 symbols_unicode = {
     2: "1F34E",
@@ -56,8 +29,5 @@ symbols_unicode = {
     97: "1F4A9"
 }
 
-# for prime, filename in symbols.items():
-#     subprocess.run(f"convert {filename}.png -background none -flatten EPS3:{prime}.eps", shell=True)
-
 for prime, filename in symbols_unicode.items():
-    subprocess.run(f"cairosvg /Users/hwb/Desktop/noto-emoji/svg/emoji_u{filename.lower()}.svg -s 0.5 -o {prime}.eps", shell=True)
+    subprocess.run(f"cairosvg emoji_u{filename.lower()}.svg -s 0.5 -o {prime}.eps", shell=True)
