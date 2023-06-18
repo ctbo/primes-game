@@ -1,7 +1,6 @@
 resources/*.eps
 resources/*.png
 **/.DS_Store
-*.pdf
 *.aux
 *.log
 *.synctex.gz
