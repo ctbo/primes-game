@@ -4,11 +4,11 @@ import subprocess
 symbols_unicode = {
     2: "1F34E",
     3: "1FAD0",
-    5: "1F34C", # banana; tangerine: "1F34A",
+    5: "1F34C-bo", # banana; tangerine: "1F34A",
     7: "1F951",
-    11: "1F424",
+    11: "1F424-bo", # chick
     13: "1F416",
-    17: "1F411-bo",
+    17: "1F411-bo", # sheep
     19: "1F40E",
     23: "1F419",
     29: "1F980",
