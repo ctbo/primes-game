@@ -5,7 +5,9 @@
 %%Pages: 1
 %%EndComments
 
-false % set to true to produce individual board squares for game GUI
+% This is intended to be executed by GhostScript.
+% The following parameters can be specified on the GhostScript command line:
+% -dBoardSquares produce individual board squares for game GUI/rulesheet
 
 /realshowpage {showpage} bind def
 /showpage {} def % this is a hack to prevent GhostScript from starting a
@@ -155,8 +157,10 @@ false % set to true to produce individual board squares for game GUI
 % start drawing
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+/BoardSquares where
 { % if we are producing individual squares for GUI
-
+    pop
+    
     /xstep 802 11 div def
     /ystep 1150 10 div def
 

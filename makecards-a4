@@ -1,2 +1,0 @@
-#!/bin/sh
-gs --permit-file-read=./ --permit-file-read=resources/ -sDEVICE=pdfwrite -sOutputFile=primecards-a4.pdf -dBATCH -dNOPAUSE -dNinePerPage -dCardGrid primecards.ps
