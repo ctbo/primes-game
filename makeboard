@@ -1,2 +1,0 @@
-#!/bin/sh
-gs --permit-file-read=./ --permit-file-read=resources/ -sDEVICE=pdfwrite -sOutputFile=snakeboard.pdf -dBATCH -dNOPAUSE snakeboard.ps
