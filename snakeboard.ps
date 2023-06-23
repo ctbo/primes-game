@@ -92,6 +92,12 @@
     150 div 0.6 1 sethsbcolor
 } def
 
+/setDarkColorN
+{
+    100 exch sub
+    150 div 1 1 sethsbcolor
+} def
+
 /setLightColorN
 {
     100 exch sub
@@ -107,7 +113,24 @@
 
     gsave
     0.5 xstep mul 0.7 ystep mul rmoveto
-    gsave 1 setgray currentpoint newpath 0.40 xstep mul 0 360 arc dup setLightColorN fill grestore
+
+    % gsave 1 setgray currentpoint newpath 0.40 xstep mul 0 360 arc dup setLightColorN fill grestore
+
+    gsave 1 setgray % dup setDarkColorN
+    currentpoint translate
+    dup 10 mod 0 ne
+    { % if
+        dup 10 idiv 2 mod 0 eq
+        { % ifelse
+            -90 rotate
+        }
+        {
+            90 rotate
+        } ifelse
+    } if
+    1.2 1.4 scale
+    -24 -24 translate
+    (resources/footprints.eps) run grestore
     dup 2 string cvs
     0 setgray
     numberFont showCentered
