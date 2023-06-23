@@ -4,7 +4,7 @@ import subprocess
 symbols_unicode = {
     2: "1F34E",
     3: "1FAD0",
-    5: "1F34C", # banana; tangerine: "1F34A",
+    5: "1F34C-bo", # banana; tangerine: "1F34A",
     7: "1F951",
     11: "1F424",
     13: "1F416-bo",
@@ -17,7 +17,7 @@ symbols_unicode = {
     41: "1F40A", # crocodile. "1F438", # frog. lizard: "1F98E",
     43: "1F422",
     47: "1F40D",
-    53: "1F418-bo",
+    53: "1F418",
     59: "1F98F", # rhino. zebra: "1F993",
     61: "1F42A",
     67: "1F992",
