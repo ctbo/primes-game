@@ -70,6 +70,8 @@
 
 /symbolSpacing { xstep 0.3 mul } def
 
+/r 9 def % radius of rounded corners for rectangles
+
 /numberFont
 {
     /Chalkboard findfont 42 scalefont setfont
@@ -110,6 +112,28 @@
     0 setgray
     numberFont showCentered
     grestore
+
+    dup 1 ne
+    { % if
+        gsave
+        currentpoint translate
+        /lx 3.85 def % left
+        /rx xstep lx sub def % right
+        /by 5 def % bottom
+        /ty 48 def % top
+        
+        lx r add by moveto rx r sub by lineto
+        rx r sub by r add r 270 360 arc
+        rx ty r sub lineto
+        rx r sub ty r sub r 0 90 arc
+        lx r add ty lineto
+        lx r add ty r sub r 90 180 arc
+        lx by r add lineto
+        lx r add by r add r 180 270 arc
+        closepath
+        0.7 setgray fill
+        grestore
+    } if
 
     primeFactors /pfs exch def
     pfs length /l exch def
