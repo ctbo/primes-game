@@ -309,12 +309,38 @@
         stroke
     } for
 
-    0 setgray
-    0.7 setlinewidth
     % draw vertical grid lines
     1 1 10
     { % for x
-        xstep mul 0 moveto 0 10 ystep mul rlineto stroke
+        dup xstep mul 0 moveto
+        0 1 9
+        { % for y
+            gsave
+
+            1 index exch % make a copy of x
+
+            currentpoint translate
+            dup ystep mul 0 exch translate
+            dup 2 mod 0 ne { -1 1 scale exch 11 exch sub exch } if
+            10 mul add 1 sub
+            dup 0 eq { setLightColorN } { setColorN } ifelse
+            0 ystep 0.5 mul 4 sub moveto
+            8 ystep 0.5 mul lineto
+            0 ystep 0.5 mul 4 add lineto
+            closepath fill
+            
+            0 0 moveto
+            0 ystep 0.5 mul 4 sub lineto
+            8 ystep 0.5 mul lineto
+            0 ystep 0.5 mul 4 add lineto
+            0 ystep lineto
+            0 setgray
+            0.7 setlinewidth
+            stroke
+
+            grestore
+        } for
+        pop
     } for
 
     3 setlinewidth
@@ -326,3 +352,5 @@
 
 
 } ifelse
+
+stack
