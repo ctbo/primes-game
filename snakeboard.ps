@@ -324,19 +324,12 @@
             dup 2 mod 0 ne { -1 1 scale exch 11 exch sub exch } if
             10 mul add 1 sub
             dup 0 eq { setLightColorN } { setColorN } ifelse
-            0 ystep 0.5 mul 4 sub moveto
-            8 ystep 0.5 mul lineto
-            0 ystep 0.5 mul 4 add lineto
-            closepath fill
-            
+
             0 0 moveto
-            0 ystep 0.5 mul 4 sub lineto
-            8 ystep 0.5 mul lineto
-            0 ystep 0.5 mul 4 add lineto
-            0 ystep lineto
-            0 setgray
-            0.7 setlinewidth
-            stroke
+            5 0.5 ystep mul  5 0.5 ystep mul  0 ystep curveto
+            
+            gsave closepath fill grestore
+            0.7 setlinewidth 0 setgray stroke
 
             grestore
         } for
