@@ -98,6 +98,20 @@
     150 div 0.2 1 sethsbcolor
 } def
 
+/setDarkColorN
+{
+    100 exch sub
+    150 div 1 1 sethsbcolor
+} def
+
+/setComplementColorN
+{
+    100 exch sub
+    150 div
+    0.5 add dup 1 gt { 1 sub } if
+    0.6 1 sethsbcolor
+} def
+
 /drawSquare
 { % expecting the number on the stack and current point in the ll corner
     dup setColorN
@@ -322,25 +336,46 @@
             currentpoint translate
             dup ystep mul 0 exch translate
             dup 2 mod 0 ne { -1 1 scale exch 11 exch sub exch } if
-            10 mul add 1 sub
-            dup 0 eq { setLightColorN } { setColorN } ifelse
-            0 ystep 0.5 mul 4 sub moveto
-            8 ystep 0.5 mul lineto
-            0 ystep 0.5 mul 4 add lineto
-            closepath fill
-            
-            0 0 moveto
-            0 ystep 0.5 mul 4 sub lineto
-            8 ystep 0.5 mul lineto
-            0 ystep 0.5 mul 4 add lineto
-            0 ystep lineto
-            0 setgray
-            0.7 setlinewidth
+            10 mul add 1 sub % number of current square
+
+            0 0 moveto 0 ystep rlineto
+            0 setgray 0.7 setlinewidth
             stroke
+
+            dup setComplementColorN
+            0 0.5 ystep mul translate
+            -90 rotate
+            0.5 0.5 scale
+            -24 -24 translate
+            2 mod 0 eq { (resources/leftfoot.eps) } { (resources/rightfoot.eps) } ifelse run
 
             grestore
         } for
         pop
+    } for
+
+    20 20 80
+    { % for
+        gsave
+        dup nToLLCorner translate
+        0.8 xstep mul 0.5 ystep mul translate
+        0.5 0.5 scale
+        -24 -24 translate
+        setComplementColorN
+        (resources/rightfoot.eps) run
+        grestore
+    } for
+        
+    10 20 90
+    { % for
+        gsave
+        dup nToLLCorner translate
+        0.2 xstep mul 0.5 ystep mul translate
+        0.5 0.5 scale
+        -24 -24 translate
+        setComplementColorN
+        (resources/leftfoot.eps) run
+        grestore
     } for
 
     3 setlinewidth
