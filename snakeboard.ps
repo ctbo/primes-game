@@ -89,25 +89,25 @@
 /setColorN
 {
     100 exch sub
-    150 div 0.6 1 sethsbcolor
+    150 div 0.7 1 sethsbcolor
 } def
 
 /setLightColorN
 {
     100 exch sub
-    150 div 0.2 1 sethsbcolor
+    150 div 0.3 1 sethsbcolor
 } def
 
 /drawSquare
 { % expecting the number on the stack and current point in the ll corner
-    dup setColorN
+    dup setLightColorN
     gsave
     xstep 0 rlineto 0 ystep rlineto xstep neg 0 rlineto closepath fill
     grestore
 
     gsave
     0.5 xstep mul 0.7 ystep mul rmoveto
-    gsave 1 setgray currentpoint newpath 0.40 xstep mul 0 360 arc dup setLightColorN fill grestore
+    gsave 1 setgray currentpoint newpath 0.40 xstep mul 0 360 arc dup setColorN fill grestore
     dup 2 string cvs
     0 setgray
     numberFont showCentered
@@ -246,13 +246,13 @@
     20 20 80
     { % for n
         dup evenCurvePath closepath
-        setColorN fill
+        setLightColorN fill
     } for
 
     10 20 90
     { % for n
         dup oddCurvePath closepath
-        setColorN fill
+        setLightColorN fill
     } for
 
     /cap
@@ -323,7 +323,7 @@
             dup ystep mul 0 exch translate
             dup 2 mod 0 ne { -1 1 scale exch 11 exch sub exch } if
             10 mul add 1 sub
-            dup 0 eq { setLightColorN } { setColorN } ifelse
+            dup 0 eq { setLightColorN } { setLightColorN } ifelse
             0 ystep 0.5 mul 8 sub moveto
             8 ystep 0.5 mul lineto
             0 ystep 0.5 mul 8 add lineto
