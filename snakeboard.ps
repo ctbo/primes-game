@@ -107,7 +107,7 @@
 
     gsave
     0.5 xstep mul 0.7 ystep mul rmoveto
-    gsave 1 setgray currentpoint newpath 0.40 xstep mul 0 360 arc dup setColorN fill grestore
+    gsave currentpoint newpath 0.40 xstep mul 2 sub 0 360 arc dup setColorN fill grestore
     dup 2 string cvs
     0 setgray
     numberFont showCentered
@@ -200,7 +200,7 @@
 { % else produce the board
     << /PageSize [842 1190] >> setpagedevice
 
-    0 0 moveto 842 0 lineto 842 1190 lineto 0 1190 lineto closepath 0.7 setgray fill
+    0 0 moveto 842 0 lineto 842 1190 lineto 0 1190 lineto closepath 0 setgray fill
 
     % leave 20pt on each edge, so the board will be 802 x 1150 pt
     20 20 translate
@@ -264,7 +264,7 @@
         closepath
         setLightColorN fill
         grestore
-        0 setgray 3 setlinewidth
+        0 setgray 8 setlinewidth
         stroke
     } def
 
@@ -295,7 +295,7 @@
     } for
 
     0 setgray
-    3 setlinewidth
+    8 setlinewidth
     20 20 80
     { % for n
         evenCurvePath
@@ -335,7 +335,7 @@
             0 ystep 0.5 mul 8 add lineto
             0 ystep lineto
             0 setgray
-            0.7 setlinewidth
+            1.5 setlinewidth
             stroke
 
             grestore
@@ -343,7 +343,7 @@
         pop
     } for
 
-    3 setlinewidth
+    8 setlinewidth
     % draw horizontal grid lines
     0 1 10
     { % for y
