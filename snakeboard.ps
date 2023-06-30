@@ -16,6 +16,11 @@
 
 (common.ps) run
 
+/arcsin
+{
+    dup dup mul 1 sub neg sqrt atan
+} def
+
 % Calculate the midpoint of the bounding box of a string
 /stringMidpoint {
     gsave
@@ -324,15 +329,13 @@
             dup 2 mod 0 ne { -1 1 scale exch 11 exch sub exch } if
             10 mul add 1 sub
             dup 0 eq { setLightColorN } { setLightColorN } ifelse
-            0 ystep 0.5 mul 8 sub moveto
-            8 ystep 0.5 mul lineto
-            0 ystep 0.5 mul 8 add lineto
+            0.5 xstep mul 0.3 ystep mul 0.5 xstep mul 180 180 0.2 ystep mul 0.5 xstep mul div arcsin sub arcn
+            0.5 xstep mul 0.7 ystep mul 0.5 xstep mul 180 0.2 ystep mul 0.5 xstep mul div arcsin add 180 arcn
             closepath fill
             
             0 0 moveto
-            0 ystep 0.5 mul 8 sub lineto
-            8 ystep 0.5 mul lineto
-            0 ystep 0.5 mul 8 add lineto
+            0.5 xstep mul 0.3 ystep mul 0.5 xstep mul 180 180 0.2 ystep mul 0.5 xstep mul div arcsin sub arcn
+            0.5 xstep mul 0.7 ystep mul 0.5 xstep mul 180 0.2 ystep mul 0.5 xstep mul div arcsin add 180 arcn
             0 ystep lineto
             0 setgray
             1.5 setlinewidth
