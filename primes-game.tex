@@ -4,6 +4,8 @@
 
 \documentclass{article}
 
+\usepackage[a4paper, left=5cm, right=5cm, top=3cm, bottom=3cm]{geometry}
+
 \usepackage{fontspec}
 \usepackage{graphicx}
 \usepackage{adjustbox}
@@ -11,7 +13,7 @@
 \setmainfont{HelveticaNeue}
 
 \newcommand{\card}[1]{\adjustbox{valign=m}{\includegraphics[page=#1, width=2cm]{primecards-screen.pdf}}}
-\newcommand{\largecard}[1]{\adjustbox{valign=m}{\includegraphics[page=#1, width=37mm]{primecards-screen.pdf}}}
+\newcommand{\largecard}[1]{\adjustbox{valign=m}{\includegraphics[page=#1, width=45mm]{primecards-screen.pdf}}}
 \newcommand{\square}[1]{\adjustbox{valign=m}{\includegraphics[page=#1, width=2cm]{boardsquares.pdf}}}
 
 \setlength{\parindent}{0pt}
@@ -78,13 +80,13 @@ Each pair of players has two tokens of the same colour.
 
 The deck has 108 cards, 12 for each number from 1 to~9. For each number, the back (black side) of the card shows which 12 symbols (or combinations of symbols) are on the white side of cards with that number.
 
-\begin{centering}
+\begin{adjustbox}{center}
 \begin{tabular}{ccc}
 \vspace*{5pt}\\
 \largecard{2} & \largecard{26} & \largecard{50} \vspace*{10pt}\\
 \largecard{74} & \largecard{98} & \largecard{122} \vspace*{10pt}\\
 \largecard{146} & \largecard{170} & \largecard{194} \vspace*{10pt}\\
 \end{tabular}
-\end{centering}
+\end{adjustbox}
 
 \end{document}
