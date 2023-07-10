@@ -1,6 +1,6 @@
 all : primecards.pdf primecards-a4.pdf primecards-screen.pdf \
 	snakeboard.pdf boardsquares.pdf \
-	primes-game.pdf
+	primes-game.pdf primes-game-german.pdf
 
 EPS := resources/2.eps
 
@@ -22,6 +22,10 @@ boardsquares.pdf : snakeboard.ps common.ps $(EPS)
 primes-game.pdf : primes-game.tex boardsquares.pdf primecards-screen.pdf
 	lualatex primes-game.tex
 	lualatex primes-game.tex
+
+primes-game-german.pdf : primes-game-german.tex boardsquares.pdf primecards-screen.pdf
+	lualatex primes-game-german.tex
+	lualatex primes-game-german.tex
 
 # List of all SVG files
 SVGS := $(wildcard resources/*.svg)
