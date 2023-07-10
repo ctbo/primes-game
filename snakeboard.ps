@@ -100,13 +100,16 @@
 
 /drawSquare
 { % expecting the number on the stack and current point in the ll corner
+    dup 10 mod 0 eq /spread exch def % true for multiples of 10
+
     dup setLightColorN
     gsave
     xstep 0 rlineto 0 ystep rlineto xstep neg 0 rlineto closepath fill
     grestore
 
     gsave
-    0.5 xstep mul 0.7 ystep mul rmoveto
+    0.5 xstep mul 0.3 ystep mul rmoveto
+    spread { 0 -10 rmoveto } if
     gsave currentpoint newpath 0.40 xstep mul 2 sub 0 360 arc dup setColorN fill grestore
     dup 2 string cvs
     0 setgray
@@ -118,7 +121,7 @@
     
     l 1 eq
     { % ifelse
-        0.5 xstep mul 26 rmoveto
+        0.5 xstep mul ystep 26 sub rmoveto
         gsave
         2 2 scale
         pfs 0 get symbolProcedures exch get exec
@@ -127,7 +130,8 @@
     { % else
         l 2 le
         { % ifelse
-            0.5 xstep mul 26 rmoveto
+            0.5 xstep mul ystep 26 sub rmoveto
+            spread { 0 10 rmoveto } if
             pfs symbolRow
         }
         { % else
@@ -144,7 +148,8 @@
                     pfs 3 l 3 sub getinterval pfs 0 3 getinterval
                 } ifelse
             } ifelse
-            0.5 xstep mul 16 rmoveto
+            0.5 xstep mul ystep 36 sub rmoveto
+            spread { 0 10 rmoveto } if
             gsave
             symbolRow
             grestore
