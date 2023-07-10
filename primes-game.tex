@@ -10,6 +10,19 @@
 \usepackage{graphicx}
 \usepackage{adjustbox}
 
+% For custom header and footer
+\usepackage{fancyhdr}
+
+% For custom date format
+\usepackage[useregional=numeric]{datetime2}
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\renewcommand{\headrulewidth}{0pt} % no line in header area
+\fancyfoot[L]{Skip or Trip} % left footer
+\fancyfoot[C]{\thepage} % center footer
+\fancyfoot[R]{\DTMtoday} % right footer
+
 \setmainfont{HelveticaNeue}
 
 \newcommand{\card}[1]{\adjustbox{valign=m}{\includegraphics[page=#1, width=2cm]{primecards-screen.pdf}}}

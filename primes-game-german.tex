@@ -15,6 +15,17 @@
 \usepackage{graphicx}
 \usepackage{adjustbox}
 
+% For custom header and footer
+\usepackage{fancyhdr}
+\usepackage{datetime}
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\renewcommand{\headrulewidth}{0pt} % no line in header area
+\fancyfoot[L]{Schwupps oder Schubs} % left footer
+\fancyfoot[C]{\thepage} % center footer
+\fancyfoot[R]{\today} % right footer
+
 \setmainfont{HelveticaNeue}
 
 \newcommand{\card}[1]{\adjustbox{valign=m}{\includegraphics[page=#1, width=2cm]{primecards-screen.pdf}}}
